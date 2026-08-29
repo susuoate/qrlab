@@ -17,7 +17,7 @@ body {
   margin: 0;
   background: var(--cream);
   color: var(--ink);
-  font-family: var(--font-geist-sans), "Noto Sans Thai", "Leelawadee UI", Arial, sans-serif;
+  font-family: "Segoe UI", "Noto Sans Thai", "Leelawadee UI", Arial, sans-serif;
   text-rendering: optimizeLegibility;
 }
 button, input, select { font: inherit; }

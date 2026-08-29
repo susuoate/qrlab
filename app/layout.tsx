@@ -1,19 +1,12 @@
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
-  subsets: ['latin'],
-});
-
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin'],
-});
+const productionUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
+  ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+  : 'https://qrlab-th.oateoate1.chatgpt.site';
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://qrlab-th.oateoate1.chatgpt.site'),
+  metadataBase: new URL(productionUrl),
   title: 'QR LAB — สร้าง QR Code จาก URL ฟรี',
   description: 'แปลง URL เป็น QR Code ฟรี ปรับสีและดาวน์โหลด PNG ความละเอียดสูงได้ทันที โดยไม่ต้องสมัครสมาชิก',
   openGraph: {
@@ -45,11 +38,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="th">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
