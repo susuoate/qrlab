@@ -4,6 +4,8 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import QRCode from 'qrcode';
 
 const colorChoices = ['#123B3A', '#196B62', '#215391', '#20232B', '#702D54'];
+type ImageFormat = 'png' | 'jpeg';
+
 const quickLinks = [
   { label: 'เว็บไซต์', value: 'https://example.com' },
   { label: 'Facebook', value: 'https://facebook.com/' },
@@ -26,6 +28,7 @@ export default function Home() {
   const [darkColor, setDarkColor] = useState(colorChoices[0]);
   const [lightColor, setLightColor] = useState('#FFFFFF');
   const [size, setSize] = useState(720);
+  const [imageFormat, setImageFormat] = useState<ImageFormat>('png');
   const [error, setError] = useState('');
   const [copied, setCopied] = useState(false);
   const [downloaded, setDownloaded] = useState(false);
@@ -37,9 +40,9 @@ export default function Home() {
       width: target ? size : 320,
       margin: 3,
       errorCorrectionLevel: 'H',
-      color: { dark: darkColor, light: lightColor },
+      color: { dark: darkColor, light: imageFormat === 'jpeg' ? '#FFFFFF' : lightColor },
     });
-  }, [darkColor, lightColor, size]);
+  }, [darkColor, imageFormat, lightColor, size]);
 
   useEffect(() => {
     const timer = window.setTimeout(() => {
@@ -64,8 +67,9 @@ export default function Home() {
     const exportCanvas = document.createElement('canvas');
     await renderQr(normalizedUrl, exportCanvas);
     const anchor = document.createElement('a');
-    anchor.download = 'qrlab-code.png';
-    anchor.href = exportCanvas.toDataURL('image/png');
+    const isJpeg = imageFormat === 'jpeg';
+    anchor.download = `qrlab-code.${isJpeg ? 'jpg' : 'png'}`;
+    anchor.href = exportCanvas.toDataURL(isJpeg ? 'image/jpeg' : 'image/png', 0.95);
     anchor.click();
     setDownloaded(true);
     window.setTimeout(() => setDownloaded(false), 1800);
@@ -187,16 +191,25 @@ export default function Home() {
                       <option value={1024}>1024 px</option>
                     </select>
                   </label>
+
+                  <label className="format-control">
+                    ชนิดไฟล์
+                    <select value={imageFormat} onChange={(event) => setImageFormat(event.target.value as ImageFormat)}>
+                      <option value="png">PNG</option>
+                      <option value="jpeg">JPEG</option>
+                    </select>
+                  </label>
                 </div>
 
                 <label className="background-toggle">
                   <span>
                     <b>พื้นหลังโปร่งใส</b>
-                    <small>เหมาะกับงานออกแบบและโลโก้</small>
+                    <small>{imageFormat === 'jpeg' ? 'JPEG ใช้พื้นหลังสีขาว' : 'เหมาะกับงานออกแบบและโลโก้'}</small>
                   </span>
                   <input
                     type="checkbox"
                     checked={lightColor === '#00000000'}
+                    disabled={imageFormat === 'jpeg'}
                     onChange={(event) => setLightColor(event.target.checked ? '#00000000' : '#FFFFFF')}
                   />
                   <i aria-hidden="true" />
@@ -206,7 +219,7 @@ export default function Home() {
               <div className="preview-panel">
                 <div className="preview-topline">
                   <span>ตัวอย่าง</span>
-                  <b>PNG</b>
+                  <b>{imageFormat.toUpperCase()}</b>
                 </div>
                 <div className="qr-stage">
                   <span className="scan-line" aria-hidden="true" />
@@ -215,7 +228,7 @@ export default function Home() {
                 <p className="preview-url" title={normalizedUrl}>{normalizedUrl}</p>
                 <button className="download-button" type="button" onClick={downloadQr} disabled={Boolean(error)}>
                   <span className="button-icon" aria-hidden="true">↓</span>
-                  <span>{downloaded ? 'ดาวน์โหลดแล้ว ✓' : 'ดาวน์โหลด PNG'}</span>
+                  <span>{downloaded ? 'ดาวน์โหลดแล้ว ✓' : `ดาวน์โหลด ${imageFormat.toUpperCase()}`}</span>
                   <small>{size} px</small>
                 </button>
                 <button className="copy-button" type="button" onClick={copyUrl} disabled={Boolean(error)}>
@@ -243,7 +256,7 @@ export default function Home() {
         <div className="steps-grid">
           <article><span className="step-number">01</span><div className="step-icon">↗</div><h3>วาง URL</h3><p>ใส่ลิงก์เว็บไซต์ เมนูออนไลน์ โซเชียล หรือหน้าสินค้าที่ต้องการแชร์</p></article>
           <article><span className="step-number">02</span><div className="step-icon">◐</div><h3>ปรับให้เข้ากับแบรนด์</h3><p>เลือกสี ขนาด และพื้นหลังให้เหมาะกับหน้าจอหรืองานออกแบบของคุณ</p></article>
-          <article><span className="step-number">03</span><div className="step-icon">↓</div><h3>ดาวน์โหลดทันที</h3><p>บันทึกเป็น PNG ความละเอียดสูง พร้อมนำไปใช้ได้โดยไม่มีลายน้ำ</p></article>
+          <article><span className="step-number">03</span><div className="step-icon">↓</div><h3>ดาวน์โหลดทันที</h3><p>บันทึกเป็น PNG หรือ JPEG ความละเอียดสูง พร้อมนำไปใช้ได้โดยไม่มีลายน้ำ</p></article>
         </div>
       </section>
 

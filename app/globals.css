@@ -78,7 +78,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .progress-line > i { height: 1px; background: #dfe3df; }
 .generator-grid { display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(270px, .88fr); }
 .controls { padding: 30px; border-right: 1px solid var(--line); }
-.field-label, fieldset legend, .size-control { display: block; margin-bottom: 9px; font-size: 11px; font-weight: 850; }
+.field-label, fieldset legend, .size-control, .format-control { display: block; margin-bottom: 9px; font-size: 11px; font-weight: 850; }
 .url-field { display: grid; grid-template-columns: 28px 1fr 26px; align-items: center; height: 56px; padding: 0 13px; background: white; border: 1.5px solid rgba(18,59,58,.22); border-radius: 13px; transition: border-color .2s, box-shadow .2s; }
 .url-field:focus-within { border-color: var(--ink); box-shadow: 0 0 0 4px rgba(18,59,58,.07); }
 .url-field.has-error { border-color: #d75345; box-shadow: 0 0 0 4px rgba(215,83,69,.06); }
@@ -93,19 +93,20 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .quick-links button { padding: 6px 9px; border: 1px solid var(--line); border-radius: 999px; color: var(--ink); background: transparent; font-size: 9px; font-weight: 750; cursor: pointer; transition: .2s; }
 .quick-links button:hover { background: #eff2e9; border-color: rgba(18,59,58,.24); }
 .divider { height: 1px; margin: 24px 0; background: var(--line); }
-.control-row { display: grid; grid-template-columns: minmax(0, 1fr) 118px; gap: 24px; }
+.control-row { display: grid; grid-template-columns: minmax(0, 1fr) 105px 105px; gap: 18px; }
 fieldset { min-width: 0; margin: 0; padding: 0; border: 0; }
 .swatches { display: flex; align-items: center; gap: 8px; }
 .swatches button, .custom-color { position: relative; display: grid; place-items: center; width: 27px; height: 27px; flex: 0 0 27px; border: 3px solid white; border-radius: 50%; box-shadow: 0 0 0 1px rgba(18,59,58,.2); cursor: pointer; }
 .swatches button.active { box-shadow: 0 0 0 2px white, 0 0 0 4px var(--ink); }
 .custom-color { color: var(--ink); background: white; font-size: 13px; }
 .custom-color input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
-.size-control select { width: 100%; margin-top: 8px; padding: 8px 9px; border: 1px solid var(--line); border-radius: 9px; outline: 0; color: var(--ink); background: white; font-size: 10px; }
+.size-control select, .format-control select { width: 100%; margin-top: 8px; padding: 8px 9px; border: 1px solid var(--line); border-radius: 9px; outline: 0; color: var(--ink); background: white; font-size: 10px; }
 .background-toggle { position: relative; display: flex; align-items: center; justify-content: space-between; margin-top: 24px; padding: 14px 16px; border: 1px solid var(--line); border-radius: 12px; background: #fbfaf6; cursor: pointer; }
 .background-toggle span { display: flex; flex-direction: column; gap: 2px; }
 .background-toggle b { font-size: 10px; }
 .background-toggle small { color: var(--muted); font-size: 8px; }
 .background-toggle input { position: absolute; opacity: 0; }
+.background-toggle:has(input:disabled) { cursor: not-allowed; opacity: .72; }
 .background-toggle > i { position: relative; width: 38px; height: 21px; flex: 0 0 38px; border-radius: 999px; background: #d8ddda; transition: .2s; }
 .background-toggle > i::after { content: ''; position: absolute; top: 3px; left: 3px; width: 15px; height: 15px; border-radius: 50%; background: white; box-shadow: 0 2px 5px rgba(0,0,0,.14); transition: .2s; }
 .background-toggle input:checked + i { background: var(--ink); }

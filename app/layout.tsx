@@ -8,7 +8,7 @@ const productionUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
 export const metadata: Metadata = {
   metadataBase: new URL(productionUrl),
   title: 'QR LAB — สร้าง QR Code จาก URL ฟรี',
-  description: 'แปลง URL เป็น QR Code ฟรี ปรับสีและดาวน์โหลด PNG ความละเอียดสูงได้ทันที โดยไม่ต้องสมัครสมาชิก',
+  description: 'แปลง URL เป็น QR Code ฟรี ปรับสีและดาวน์โหลด PNG หรือ JPEG ความละเอียดสูงได้ทันที โดยไม่ต้องสมัครสมาชิก',
   openGraph: {
     type: 'website',
     locale: 'th_TH',
