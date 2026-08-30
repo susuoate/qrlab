@@ -4,13 +4,14 @@ import { resolve } from 'node:path';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-  root: resolve(__dirname, 'mobile'),
-  publicDir: resolve(__dirname, 'public'),
+  root: resolve(import.meta.dirname, 'mobile'),
+  envDir: resolve(import.meta.dirname),
+  publicDir: resolve(import.meta.dirname, 'public'),
   base: './',
   css: { postcss: { plugins: [tailwindcss()] } },
   plugins: [react()],
   build: {
-    outDir: resolve(__dirname, 'mobile-dist'),
+    outDir: resolve(import.meta.dirname, 'mobile-dist'),
     emptyOutDir: true,
   },
 });

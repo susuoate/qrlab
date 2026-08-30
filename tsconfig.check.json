@@ -1,0 +1,25 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "incremental": false,
+    "types": ["node", "vite/client"]
+  },
+  "include": [
+    "app/**/*.ts",
+    "app/**/*.tsx",
+    "mobile/**/*.ts",
+    "mobile/**/*.tsx",
+    "capacitor.config.ts",
+    "next.config.ts",
+    "vite.config.ts",
+    "vite.mobile.config.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    ".next",
+    "dist",
+    "mobile-dist",
+    "android/app/src/main/assets/public",
+    "ios/App/App/public"
+  ]
+}

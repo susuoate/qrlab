@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import QRCode from 'qrcode';
+import SupportPanel from '../mobile/SupportPanel';
 
 const colorChoices = ['#123B3A', '#196B62', '#215391', '#20232B', '#702D54'];
 type ImageFormat = 'png' | 'jpeg';
@@ -278,6 +279,8 @@ export default function Home({ mobileApp = false }: { mobileApp?: boolean }) {
           </div>
         </div>
       </section>
+
+      {mobileApp && <SupportPanel />}
 
       <section className="value-strip" aria-label="ข้อมูลบริการ">
         <div><strong>ฟรี 100%</strong><span>ไม่มีค่าใช้จ่ายแอบแฝง</span></div>
