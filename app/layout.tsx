@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import './globals.css';
 
 const productionUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
@@ -7,8 +7,25 @@ const productionUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
 
 export const metadata: Metadata = {
   metadataBase: new URL(productionUrl),
+  applicationName: 'QR LAB',
   title: 'QR LAB — สร้าง QR Code จาก URL ฟรี',
   description: 'แปลง URL เป็น QR Code ฟรี ปรับสีและดาวน์โหลด PNG หรือ JPEG ความละเอียดสูงได้ทันที โดยไม่ต้องสมัครสมาชิก',
+  manifest: '/manifest.webmanifest',
+  icons: {
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/icons/icon-192.png', sizes: '192x192', type: 'image/png' },
+    ],
+    apple: [{ url: '/icons/icon-192.png', sizes: '192x192', type: 'image/png' }],
+  },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: 'QR LAB',
+  },
+  formatDetection: {
+    telephone: false,
+  },
   openGraph: {
     type: 'website',
     locale: 'th_TH',
@@ -29,6 +46,11 @@ export const metadata: Metadata = {
     description: 'สร้าง QR Code จาก URL ฟรี ปรับสีและดาวน์โหลดไฟล์คมชัดได้ทันที',
     images: ['/og.png'],
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: '#0c79d8',
+  colorScheme: 'light',
 };
 
 export default function RootLayout({

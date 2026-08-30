@@ -32,6 +32,13 @@ export default function Home() {
   const [error, setError] = useState('');
   const [copied, setCopied] = useState(false);
   const [downloaded, setDownloaded] = useState(false);
+  const [isNativeApp, setIsNativeApp] = useState(false);
+
+  useEffect(() => {
+    void import('@capacitor/core').then(({ Capacitor }) => {
+      setIsNativeApp(Capacitor.isNativePlatform());
+    });
+  }, []);
 
   const renderQr = useCallback(async (value: string, target?: HTMLCanvasElement) => {
     const canvas = target ?? canvasRef.current;
@@ -68,9 +75,40 @@ export default function Home() {
     await renderQr(normalizedUrl, exportCanvas);
     const anchor = document.createElement('a');
     const isJpeg = imageFormat === 'jpeg';
-    anchor.download = `qrlab-code.${isJpeg ? 'jpg' : 'png'}`;
-    anchor.href = exportCanvas.toDataURL(isJpeg ? 'image/jpeg' : 'image/png', 0.95);
-    anchor.click();
+    const fileName = `qrlab-code.${isJpeg ? 'jpg' : 'png'}`;
+    const mimeType = isJpeg ? 'image/jpeg' : 'image/png';
+
+    if (isNativeApp) {
+      const dataUrl = exportCanvas.toDataURL(mimeType, 0.95);
+      const [{ Directory, Filesystem }, { Share }, { Haptics, ImpactStyle }] = await Promise.all([
+        import('@capacitor/filesystem'),
+        import('@capacitor/share'),
+        import('@capacitor/haptics'),
+      ]);
+      const savedFile = await Filesystem.writeFile({
+        path: fileName,
+        data: dataUrl.split(',')[1],
+        directory: Directory.Cache,
+      });
+      await Haptics.impact({ style: ImpactStyle.Light });
+      await Share.share({
+        title: 'QR LAB',
+        text: normalizedUrl,
+        url: savedFile.uri,
+        dialogTitle: 'บันทึกหรือแชร์ QR Code',
+      });
+    } else {
+      const blob = await new Promise<Blob>((resolve, reject) => {
+        exportCanvas.toBlob((result) => result ? resolve(result) : reject(new Error('export-failed')), mimeType, 0.95);
+      });
+      const objectUrl = URL.createObjectURL(blob);
+      anchor.download = fileName;
+      anchor.href = objectUrl;
+      document.body.append(anchor);
+      anchor.click();
+      anchor.remove();
+      window.setTimeout(() => URL.revokeObjectURL(objectUrl), 1_000);
+    }
     setDownloaded(true);
     window.setTimeout(() => setDownloaded(false), 1800);
   };
@@ -228,7 +266,7 @@ export default function Home() {
                 <p className="preview-url" title={normalizedUrl}>{normalizedUrl}</p>
                 <button className="download-button" type="button" onClick={downloadQr} disabled={Boolean(error)}>
                   <span className="button-icon" aria-hidden="true">↓</span>
-                  <span>{downloaded ? 'ดาวน์โหลดแล้ว ✓' : `ดาวน์โหลด ${imageFormat.toUpperCase()}`}</span>
+                  <span>{downloaded ? 'พร้อมใช้งาน ✓' : `${isNativeApp ? 'บันทึก / แชร์' : 'ดาวน์โหลด'} ${imageFormat.toUpperCase()}`}</span>
                   <small>{size} px</small>
                 </button>
                 <button className="copy-button" type="button" onClick={copyUrl} disabled={Boolean(error)}>
@@ -290,7 +328,10 @@ export default function Home() {
           <a className="brand footer-brand" href="#top"><span className="brand-mark" aria-hidden="true"><i /><i /><i /></span><span>QR LAB</span></a>
           <p>เปลี่ยนทุกลิงก์ให้พร้อมสแกน — ฟรี เรียบง่าย และเป็นส่วนตัว</p>
         </div>
-        <a href="#generator">สร้าง QR ฟรี <span aria-hidden="true">↑</span></a>
+        <div className="footer-actions">
+          <a href={isNativeApp ? 'https://qrlab-th-public-plato-122b.vercel.app/privacy' : '/privacy'} target={isNativeApp ? '_blank' : undefined} rel={isNativeApp ? 'noreferrer' : undefined}>นโยบายความเป็นส่วนตัว</a>
+          <a href="#generator">สร้าง QR ฟรี <span aria-hidden="true">↑</span></a>
+        </div>
       </footer>
     </main>
   );
