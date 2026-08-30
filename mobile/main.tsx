@@ -5,6 +5,6 @@ import './mobile.css';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <Home />
+    <Home mobileApp />
   </StrictMode>,
 );

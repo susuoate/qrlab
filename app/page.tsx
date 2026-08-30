@@ -21,7 +21,7 @@ function normalizeUrl(value: string) {
   return parsed.toString();
 }
 
-export default function Home() {
+export default function Home({ mobileApp = false }: { mobileApp?: boolean }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [url, setUrl] = useState('https://example.com');
   const [normalizedUrl, setNormalizedUrl] = useState('https://example.com/');
@@ -121,7 +121,7 @@ export default function Home() {
   };
 
   return (
-    <main>
+    <main className={mobileApp ? 'native-app' : undefined}>
       <header className="site-header">
         <div className="header-inner">
           <a className="brand" href="#top" aria-label="QR Lab หน้าหลัก">

@@ -18,3 +18,67 @@ select,
 summary {
   touch-action: manipulation;
 }
+
+.native-app .site-header nav,
+.native-app .header-cta,
+.native-app .hero-copy,
+.native-app .value-strip,
+.native-app .steps-section,
+.native-app .features-section,
+.native-app .faq-section,
+.native-app .footer-main,
+.native-app .footer-actions a:last-child {
+  display: none;
+}
+
+.native-app .header-inner {
+  width: min(100% - 32px, 720px);
+  height: 58px;
+}
+
+.native-app .site-header {
+  background: rgba(7, 23, 47, .94);
+}
+
+.native-app .hero {
+  min-height: calc(100vh - 58px);
+  background: #07172f;
+}
+
+.native-app .hero-grid {
+  display: block;
+  width: min(100% - 24px, 720px);
+  min-height: auto;
+  padding: 18px 0 28px;
+}
+
+.native-app .generator-shell {
+  border-radius: 24px;
+  box-shadow: 0 18px 54px rgba(0, 0, 0, .3);
+}
+
+.native-app footer {
+  min-height: auto;
+  padding: 22px 24px calc(22px + env(safe-area-inset-bottom));
+  justify-content: center;
+  background: #07172f;
+}
+
+.native-app .footer-actions {
+  display: flex;
+}
+
+@media (max-width: 700px) {
+  .native-app .generator-head {
+    padding: 20px;
+  }
+
+  .native-app .progress-line {
+    padding-inline: 20px;
+  }
+
+  .native-app .controls,
+  .native-app .preview-panel {
+    padding: 22px 20px;
+  }
+}
