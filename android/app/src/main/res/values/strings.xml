@@ -4,6 +4,6 @@
     <string name="title_activity_main">QR LAB</string>
     <string name="package_name">com.susuoate.qrlab</string>
     <string name="custom_url_scheme">com.susuoate.qrlab</string>
-    <!-- Google test App ID. Replace with the production AdMob App ID before release. -->
-    <string name="admob_app_id">ca-app-pub-3940256099942544~3347511713</string>
+    <!-- Production AdMob App ID -->
+    <string name="admob_app_id">ca-app-pub-9961728700267165~2740722677</string>
 </resources>

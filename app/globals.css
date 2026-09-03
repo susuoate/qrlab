@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@import './fonts/kanit/kanit.css';
 
 :root {
   --ink: #123b3a;
@@ -17,7 +18,7 @@ body {
   margin: 0;
   background: var(--cream);
   color: var(--ink);
-  font-family: "Segoe UI", "Noto Sans Thai", "Leelawadee UI", Arial, sans-serif;
+  font-family: "Kanit", "Segoe UI", "Noto Sans Thai", Arial, sans-serif;
   text-rendering: optimizeLegibility;
 }
 button, input, select { font: inherit; }

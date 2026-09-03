@@ -11,6 +11,7 @@
     "build:mobile": "vite build --config vite.mobile.config.ts",
     "assets:native": "node scripts/generate-native-assets.mjs",
     "mobile:sync": "npm run build:mobile && node -r ./scripts/capacitor-windows-userinfo-fix.cjs ./node_modules/@capacitor/cli/bin/capacitor sync",
+    "android:open": "node -r ./scripts/capacitor-windows-userinfo-fix.cjs ./node_modules/@capacitor/cli/bin/capacitor open android",
     "start": "vinext start",
     "lint": "eslint . --ignore-pattern dist --ignore-pattern .next",
     "typecheck": "tsc --project tsconfig.check.json --noEmit",
