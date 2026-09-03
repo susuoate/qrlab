@@ -1139,7 +1139,7 @@ export default function Home({ mobileApp = false }: { mobileApp?: boolean }) {
         </div>
       </section>
 
-      {mobileApp && <SupportPanel />}
+      {mobileApp && <SupportPanel lang={lang} />}
 
       <section className="value-strip" aria-label="ข้อมูลบริการ">
         <div>

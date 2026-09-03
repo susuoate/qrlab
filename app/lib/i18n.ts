@@ -155,6 +155,27 @@ export const translations = {
     // Footer
     privacyPolicy: 'นโยบายความเป็นส่วนตัว',
     allRightsReserved: 'QR LAB — เปลี่ยนทุกลิงก์ให้พร้อมสแกน',
+
+    // Support Section
+    supportKicker: 'SUPPORT QR LAB',
+    supportTitle: 'สนับสนุนแอปพร้อมปิดโฆษณาถาวร',
+    supportDesc: 'เลือกสนับสนุน 49 หรือ 100 บาท ทั้งสองระดับซื้อครั้งเดียวและได้รับสิทธิ์ไม่มีโฆษณาเหมือนกัน',
+    supportBtn1: 'สนับสนุน',
+    supportBtn2: 'สนับสนุนพิเศษ',
+    supportOpeningStore: 'กำลังเปิด Store…',
+    supportAdFreeBadge: 'ปลดโฆษณาถาวร',
+    supportRestoreBtn: 'กู้คืนการซื้อ',
+    supportRestoring: 'กำลังกู้คืน…',
+    supportAdPrivacyBtn: 'ตั้งค่าความเป็นส่วนตัวโฆษณา',
+    supportUnlockedTitle: 'SUPPORTER',
+    supportUnlockedDesc: 'ไม่มีโฆษณาถาวร',
+    supportChecking: 'กำลังตรวจสอบสิทธิ์จาก Store…',
+    supportCancelled: 'ยกเลิกการซื้อแล้ว ไม่มีการเรียกเก็บเงิน',
+    supportSyncingWait: 'Google Play กำลังซิงก์ข้อมูลสินค้า (ปกติใช้เวลา 1-2 ชม. หลังสร้างใน Console) กรุณาลองใหม่อีกครั้ง',
+    supportFailed: 'ทำรายการไม่สำเร็จ',
+    supportConnectionFailed: 'ทำรายการไม่สำเร็จ กรุณาตรวจการเชื่อมต่อและลองใหม่',
+    supportStoreUnavailable: 'โหลดระบบ Store ไม่สำเร็จ กรุณาเปิดแอปใหม่อีกครั้ง',
+    supportPrivacyFailed: 'เปิดการตั้งค่าความเป็นส่วนตัวไม่สำเร็จ',
   },
   en: {
     brand: 'QR LAB',
@@ -310,6 +331,27 @@ export const translations = {
     // Footer
     privacyPolicy: 'Privacy Policy',
     allRightsReserved: 'QR LAB — Every Link, Ready to Scan',
+
+    // Support Section
+    supportKicker: 'SUPPORT QR LAB',
+    supportTitle: 'Support the App & Remove Ads Permanently',
+    supportDesc: 'Support with ฿49 or ฿100. Both options are one-time purchases and grant lifetime ad-free experience.',
+    supportBtn1: 'Support',
+    supportBtn2: 'Super Supporter',
+    supportOpeningStore: 'Opening Store…',
+    supportAdFreeBadge: 'Permanent Ad-Free',
+    supportRestoreBtn: 'Restore Purchases',
+    supportRestoring: 'Restoring…',
+    supportAdPrivacyBtn: 'Ad Privacy Settings',
+    supportUnlockedTitle: 'SUPPORTER',
+    supportUnlockedDesc: 'Lifetime Ad-Free Active',
+    supportChecking: 'Checking Store status…',
+    supportCancelled: 'Purchase cancelled. No charge made.',
+    supportSyncingWait: 'Google Play is syncing product data (usually takes 1-2 hours after console creation). Please try again shortly.',
+    supportFailed: 'Transaction failed',
+    supportConnectionFailed: 'Transaction failed. Please check your connection and try again.',
+    supportStoreUnavailable: 'Failed to connect to Store. Please reopen the app.',
+    supportPrivacyFailed: 'Could not open privacy settings.',
   },
 } as const;
 
