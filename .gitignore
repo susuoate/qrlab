@@ -40,3 +40,4 @@ next-env.d.ts
 /work/
 *.jks
 revenuecat*.json
+*.tsbuildinfo

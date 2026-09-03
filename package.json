@@ -16,7 +16,9 @@
     "lint": "eslint . --ignore-pattern dist --ignore-pattern .next",
     "typecheck": "tsc --project tsconfig.check.json --noEmit",
     "check:monetization-release": "node --env-file-if-exists=.env.local scripts/check-monetization-release.mjs",
-    "test:qr": "node scripts/test-qr-urls.mjs"
+    "test:qr": "node scripts/test-qr-urls.mjs",
+    "test:features": "node scripts/test-qr-features.mjs",
+    "test": "node scripts/test-qr-urls.mjs && node scripts/test-qr-features.mjs"
   },
   "dependencies": {
     "@capacitor-community/admob": "^8.1.0",
