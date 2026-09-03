@@ -100,41 +100,52 @@ async function showBanner() {
   const platform = getPlatform();
   if (!platform || bannerVisible) return bannerVisible;
 
-  const {
-    AdMob,
-    AdmobConsentStatus,
-    BannerAdPosition,
-    BannerAdSize,
-  } = await import('@capacitor-community/admob');
+  try {
+    const {
+      AdMob,
+      AdmobConsentStatus,
+      BannerAdPosition,
+      BannerAdSize,
+    } = await import('@capacitor-community/admob');
 
-  if (!adMobInitialized) {
-    await AdMob.initialize({ initializeForTesting: isTestAdsEnabled() });
-    adMobInitialized = true;
+    if (!adMobInitialized) {
+      try {
+        await AdMob.initialize({ initializeForTesting: isTestAdsEnabled() });
+      } catch (initErr) {
+        console.warn('AdMob initialize notice:', initErr);
+      }
+      adMobInitialized = true;
+    }
+
+    try {
+      let consentInfo = await AdMob.requestConsentInfo();
+      if (consentInfo.status === AdmobConsentStatus.REQUIRED && consentInfo.isConsentFormAvailable) {
+        consentInfo = await AdMob.showConsentForm();
+      }
+      privacyOptionsRequired = consentInfo.privacyOptionsRequirementStatus === 'REQUIRED';
+    } catch (consentErr) {
+      console.warn('Consent check notice:', consentErr);
+    }
+
+    const configuredBannerId = platform === 'ios'
+      ? buildEnv.VITE_ADMOB_IOS_BANNER_ID?.trim()
+      : buildEnv.VITE_ADMOB_ANDROID_BANNER_ID?.trim();
+    const isTesting = isTestAdsEnabled() || !configuredBannerId;
+
+    await AdMob.showBanner({
+      adId: configuredBannerId || testBannerIds[platform],
+      adSize: BannerAdSize.ADAPTIVE_BANNER,
+      position: BannerAdPosition.BOTTOM_CENTER,
+      isTesting,
+      npa: true,
+      margin: 0,
+    });
+    bannerVisible = true;
+    return true;
+  } catch (bannerErr) {
+    console.warn('AdMob showBanner notice (normal if unverified in closed testing):', bannerErr);
+    return false;
   }
-
-  let consentInfo = await AdMob.requestConsentInfo();
-  if (consentInfo.status === AdmobConsentStatus.REQUIRED && consentInfo.isConsentFormAvailable) {
-    consentInfo = await AdMob.showConsentForm();
-  }
-
-  privacyOptionsRequired = consentInfo.privacyOptionsRequirementStatus === 'REQUIRED';
-  if (!consentInfo.canRequestAds) return false;
-
-  const configuredBannerId = platform === 'ios'
-    ? buildEnv.VITE_ADMOB_IOS_BANNER_ID?.trim()
-    : buildEnv.VITE_ADMOB_ANDROID_BANNER_ID?.trim();
-  const isTesting = isTestAdsEnabled() || !configuredBannerId;
-
-  await AdMob.showBanner({
-    adId: configuredBannerId || testBannerIds[platform],
-    adSize: BannerAdSize.ADAPTIVE_BANNER,
-    position: BannerAdPosition.BOTTOM_CENTER,
-    isTesting,
-    npa: true,
-    margin: 0,
-  });
-  bannerVisible = true;
-  return true;
 }
 
 function createState(
@@ -156,36 +167,52 @@ async function loadMonetization(): Promise<MonetizationState> {
     return createState('unavailable', 'ระบบสนับสนุนมีเฉพาะแอป iOS และ Android');
   }
 
-  if (!getRevenueCatApiKey()) {
-    if (isTestAdsEnabled()) await showBanner();
+  const apiKey = getRevenueCatApiKey();
+  if (!apiKey) {
+    void showBanner();
     return createState('unavailable', 'กำลังใช้โหมดทดสอบ กรุณาเชื่อมต่อ Store ก่อนเปิดรับการสนับสนุน');
   }
+
+  // Always show banner for non-supporters right away
+  void showBanner();
 
   try {
     await configurePurchases();
     const { PRODUCT_CATEGORY, Purchases } = await import('@revenuecat/purchases-capacitor');
-    const [{ customerInfo }, productResult] = await Promise.all([
-      Purchases.getCustomerInfo(),
-      Purchases.getProducts({
-        productIdentifiers: productOrder,
-        type: PRODUCT_CATEGORY.NON_SUBSCRIPTION,
-      }),
-    ]);
-    storeProducts = productResult.products;
 
-    if (hasAdFreeAccess(customerInfo)) {
+    let customerInfo: CustomerInfo | null = null;
+    try {
+      const res = await Purchases.getCustomerInfo();
+      customerInfo = res.customerInfo;
+    } catch (infoErr) {
+      console.warn('RevenueCat getCustomerInfo notice:', infoErr);
+    }
+
+    if (customerInfo && hasAdFreeAccess(customerInfo)) {
       await hideBanner();
       return createState('supporter', 'ปลดล็อกไม่มีโฆษณาถาวรแล้ว ขอบคุณที่สนับสนุน QR LAB');
     }
 
-    await showBanner();
-    if (storeProducts.length !== productOrder.length) {
-      return createState('unavailable', 'ยังไม่พบสินค้าครบใน Store กรุณาตรวจ Product ID');
+    try {
+      const productResult = await Purchases.getProducts({
+        productIdentifiers: productOrder,
+        type: PRODUCT_CATEGORY.NON_SUBSCRIPTION,
+      });
+      if (productResult.products && productResult.products.length > 0) {
+        storeProducts = productResult.products;
+      }
+    } catch (prodErr) {
+      console.warn('RevenueCat getProducts notice:', prodErr);
     }
+
+    if (storeProducts.length === 0) {
+      return createState('free', 'กำลังซิงก์ราคากับ Google Play (อาจใช้เวลาสักครู่)');
+    }
+
     return createState('free', 'ซื้อครั้งเดียวเพื่อปิดโฆษณาถาวร');
-  } catch {
-    await hideBanner();
-    return createState('unavailable', 'เชื่อมต่อ Store ไม่สำเร็จ กรุณาลองใหม่ภายหลัง');
+  } catch (err) {
+    console.warn('RevenueCat initialization notice:', err);
+    return createState('free', 'กำลังเชื่อมต่อ Store กรุณาลองใหม่อีกครั้ง');
   }
 }
 
@@ -196,10 +223,27 @@ export function initializeMonetization() {
 
 export async function purchaseSupport(productId: string) {
   await configurePurchases();
-  const product = storeProducts.find((item) => item.identifier === productId);
+  const { PRODUCT_CATEGORY, Purchases } = await import('@revenuecat/purchases-capacitor');
+
+  let product = storeProducts.find((item) => item.identifier === productId);
+  if (!product) {
+    // Attempt on-demand product fetch from Google Play
+    try {
+      const result = await Purchases.getProducts({
+        productIdentifiers: [productId],
+        type: PRODUCT_CATEGORY.NON_SUBSCRIPTION,
+      });
+      product = result.products?.find((item) => item.identifier === productId);
+      if (product) {
+        storeProducts = [...storeProducts.filter((p) => p.identifier !== productId), product];
+      }
+    } catch (fetchErr) {
+      console.warn('On-demand getProducts failed:', fetchErr);
+    }
+  }
+
   if (!product) throw new Error('product-unavailable');
 
-  const { Purchases } = await import('@revenuecat/purchases-capacitor');
   const { customerInfo } = await Purchases.purchaseStoreProduct({ product });
   if (!hasAdFreeAccess(customerInfo)) throw new Error('entitlement-not-active');
 

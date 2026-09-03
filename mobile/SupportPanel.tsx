@@ -20,6 +20,12 @@ function getErrorMessage(error: unknown) {
   if (typeof error === 'object' && error && 'userCancelled' in error && error.userCancelled) {
     return 'ยกเลิกการซื้อแล้ว ไม่มีการเรียกเก็บเงิน';
   }
+  if (error instanceof Error) {
+    if (error.message.includes('product-unavailable')) {
+      return 'Google Play กำลังซิงก์ข้อมูลสินค้า (ปกติใช้เวลา 1-2 ชม. หลังสร้างใน Console) กรุณาลองใหม่อีกครั้ง';
+    }
+    return `ทำรายการไม่สำเร็จ: ${error.message}`;
+  }
   return 'ทำรายการไม่สำเร็จ กรุณาตรวจการเชื่อมต่อและลองใหม่';
 }
 
