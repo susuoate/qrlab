@@ -80,13 +80,13 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .generator-grid { display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(270px, .88fr); }
 .controls { padding: 30px; border-right: 1px solid var(--line); }
 .field-label, fieldset legend, .size-control, .format-control { display: block; margin-bottom: 9px; font-size: 11px; font-weight: 850; }
-.url-field { display: grid; grid-template-columns: 28px 1fr 26px; align-items: center; height: 56px; padding: 0 13px; background: white; border: 1.5px solid rgba(18,59,58,.22); border-radius: 13px; transition: border-color .2s, box-shadow .2s; }
+.url-field { display: flex; align-items: center; width: 100%; min-height: 56px; padding: 0 14px; background: white; border: 1.5px solid rgba(18,59,58,.22); border-radius: 13px; transition: border-color .2s, box-shadow .2s; cursor: text; box-sizing: border-box; }
 .url-field:focus-within { border-color: var(--ink); box-shadow: 0 0 0 4px rgba(18,59,58,.07); }
 .url-field.has-error { border-color: #d75345; box-shadow: 0 0 0 4px rgba(215,83,69,.06); }
-.link-icon { font-size: 19px; }
-.url-field input { width: 100%; height: 100%; padding: 0; border: 0; outline: 0; color: var(--ink); background: transparent; font-size: 14px; font-weight: 550; }
+.link-icon { display: flex; align-items: center; justify-content: center; font-size: 19px; color: #5c6b68; margin-right: 10px; flex-shrink: 0; }
+.url-field input { flex: 1 1 auto; width: 100%; height: 52px; min-width: 0; padding: 0; border: 0; outline: 0; color: var(--ink); background: transparent; font-size: 15px; font-weight: 550; font-family: inherit; }
 .url-field input::placeholder { color: #a1aaa8; }
-.url-field button { border: 0; color: #84918e; background: transparent; font-size: 22px; cursor: pointer; }
+.url-field button { display: flex; align-items: center; justify-content: center; min-width: 32px; height: 32px; padding: 0; margin-left: 6px; border: 0; border-radius: 50%; color: #84918e; background: transparent; font-size: 22px; cursor: pointer; flex-shrink: 0; }
 .field-help, .field-error { min-height: 17px; margin: 6px 2px 0; color: #899592; font-size: 9px; }
 .field-error { color: #bc463a; }
 .quick-links { display: flex; align-items: center; gap: 6px; margin-top: 11px; }
@@ -287,13 +287,13 @@ footer { display: flex; align-items: center; justify-content: space-between; min
 /* Custom Forms */
 .custom-form-group { display: flex; flex-direction: column; }
 .segmented-control { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; padding: 4px; background: #eaeee9; border-radius: 12px; }
-.segmented-control button { border: 0; padding: 8px 12px; border-radius: 9px; background: transparent; color: #495a56; font-size: 11px; font-weight: 750; cursor: pointer; transition: .2s; }
+.segmented-control button { border: 0; min-height: 42px; padding: 8px 12px; border-radius: 9px; background: transparent; color: #495a56; font-size: 12px; font-weight: 750; cursor: pointer; transition: .2s; }
 .segmented-control button.active { background: white; color: var(--ink); box-shadow: 0 2px 6px rgba(0,0,0,.08); }
 .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.currency-prefix { font-size: 16px; font-weight: 800; color: #6e7e7a; margin-right: 4px; }
-.textarea-field { height: auto !important; padding: 10px 14px !important; }
-.textarea-field textarea { width: 100%; border: 0; outline: 0; resize: vertical; font-family: inherit; font-size: 14px; color: var(--ink); }
-.checkbox-row { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 700; color: #4b5d59; cursor: pointer; user-select: none; }
+.currency-prefix { display: inline-flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 800; color: #4b5d59; margin-right: 8px; flex-shrink: 0; }
+.textarea-field { height: auto !important; min-height: 100px !important; padding: 12px 14px !important; align-items: stretch !important; }
+.textarea-field textarea { flex: 1 1 auto; width: 100%; min-height: 80px; padding: 0; border: 0; outline: 0; resize: vertical; font-family: inherit; font-size: 15px; color: var(--ink); background: transparent; line-height: 1.5; }
+.checkbox-row { display: inline-flex; align-items: center; gap: 8px; min-height: 40px; font-size: 12px; font-weight: 700; color: #4b5d59; cursor: pointer; user-select: none; }
 
 /* Logo Selector */
 .logo-selector-wrapper { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }

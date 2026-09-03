@@ -452,6 +452,14 @@ export default function Home({ mobileApp = false }: { mobileApp?: boolean }) {
     }
   };
 
+  const handleFieldClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const target = e.target as HTMLElement;
+    if (target.tagName !== 'INPUT' && target.tagName !== 'TEXTAREA' && target.tagName !== 'BUTTON') {
+      const input = e.currentTarget.querySelector('input, textarea') as HTMLInputElement | HTMLTextAreaElement | null;
+      if (input) input.focus();
+    }
+  };
+
   const handleRestoreHistory = (item: HistoryItem) => {
     setQrType(item.type);
     setDarkColor(item.darkColor);
@@ -661,7 +669,7 @@ export default function Home({ mobileApp = false }: { mobileApp?: boolean }) {
                     <label className="field-label" htmlFor="url-input">
                       {t.urlLabel}
                     </label>
-                    <div className={`url-field ${error ? 'has-error' : ''}`}>
+                    <div className={`url-field ${error ? 'has-error' : ''}`} onClick={handleFieldClick}>
                       <span className="link-icon" aria-hidden="true">
                         ↗
                       </span>
@@ -734,7 +742,7 @@ export default function Home({ mobileApp = false }: { mobileApp?: boolean }) {
                         ? t.promptpayMobile
                         : t.promptpayId}
                     </label>
-                    <div className={`url-field ${error ? 'has-error' : ''}`}>
+                    <div className={`url-field ${error ? 'has-error' : ''}`} onClick={handleFieldClick}>
                       <input
                         id="promptpay-target"
                         value={promptPayForm.target}
@@ -753,7 +761,7 @@ export default function Home({ mobileApp = false }: { mobileApp?: boolean }) {
                     <label className="field-label mt-3" htmlFor="promptpay-amount">
                       {t.promptpayAmountLabel}
                     </label>
-                    <div className="url-field">
+                    <div className="url-field" onClick={handleFieldClick}>
                       <span className="currency-prefix">฿</span>
                       <input
                         id="promptpay-amount"
@@ -775,7 +783,7 @@ export default function Home({ mobileApp = false }: { mobileApp?: boolean }) {
                     <label className="field-label" htmlFor="wifi-ssid">
                       {t.wifiSsid}
                     </label>
-                    <div className="url-field">
+                    <div className="url-field" onClick={handleFieldClick}>
                       <input
                         id="wifi-ssid"
                         value={wifiForm.ssid}
@@ -787,7 +795,7 @@ export default function Home({ mobileApp = false }: { mobileApp?: boolean }) {
                     <label className="field-label mt-3" htmlFor="wifi-pass">
                       {t.wifiPass}
                     </label>
-                    <div className="url-field">
+                    <div className="url-field" onClick={handleFieldClick}>
                       <input
                         id="wifi-pass"
                         type="text"
@@ -856,7 +864,7 @@ export default function Home({ mobileApp = false }: { mobileApp?: boolean }) {
                     <label className="field-label mt-3" htmlFor="social-username">
                       {t.socialUsername}
                     </label>
-                    <div className="url-field">
+                    <div className="url-field" onClick={handleFieldClick}>
                       <input
                         id="social-username"
                         value={socialForm.username}
@@ -876,7 +884,7 @@ export default function Home({ mobileApp = false }: { mobileApp?: boolean }) {
                     <label className="field-label" htmlFor="tel-input">
                       {t.telLabel}
                     </label>
-                    <div className="url-field">
+                    <div className="url-field" onClick={handleFieldClick}>
                       <input
                         id="tel-input"
                         value={telNumber}
@@ -895,7 +903,7 @@ export default function Home({ mobileApp = false }: { mobileApp?: boolean }) {
                     <div className="form-grid-2">
                       <div>
                         <label className="field-label">{t.vcardFirstName}</label>
-                        <div className="url-field">
+                        <div className="url-field" onClick={handleFieldClick}>
                           <input
                             value={vCardForm.firstName}
                             onChange={(e) =>
@@ -907,7 +915,7 @@ export default function Home({ mobileApp = false }: { mobileApp?: boolean }) {
                       </div>
                       <div>
                         <label className="field-label">{t.vcardLastName}</label>
-                        <div className="url-field">
+                        <div className="url-field" onClick={handleFieldClick}>
                           <input
                             value={vCardForm.lastName}
                             onChange={(e) =>
@@ -920,7 +928,7 @@ export default function Home({ mobileApp = false }: { mobileApp?: boolean }) {
                     </div>
 
                     <label className="field-label mt-2">{t.vcardPhone}</label>
-                    <div className="url-field">
+                    <div className="url-field" onClick={handleFieldClick}>
                       <input
                         value={vCardForm.phone}
                         onChange={(e) =>
@@ -932,7 +940,7 @@ export default function Home({ mobileApp = false }: { mobileApp?: boolean }) {
                     </div>
 
                     <label className="field-label mt-2">{t.vcardEmail}</label>
-                    <div className="url-field">
+                    <div className="url-field" onClick={handleFieldClick}>
                       <input
                         value={vCardForm.email}
                         onChange={(e) =>
@@ -944,7 +952,7 @@ export default function Home({ mobileApp = false }: { mobileApp?: boolean }) {
                     </div>
 
                     <label className="field-label mt-2">{t.vcardOrg}</label>
-                    <div className="url-field">
+                    <div className="url-field" onClick={handleFieldClick}>
                       <input
                         value={vCardForm.organization}
                         onChange={(e) =>
@@ -963,7 +971,7 @@ export default function Home({ mobileApp = false }: { mobileApp?: boolean }) {
                     <label className="field-label" htmlFor="text-input">
                       {t.textLabel}
                     </label>
-                    <div className="url-field textarea-field">
+                    <div className="url-field textarea-field" onClick={handleFieldClick}>
                       <textarea
                         id="text-input"
                         rows={3}
