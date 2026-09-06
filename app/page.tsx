@@ -479,12 +479,6 @@ export default function Home({ mobileApp = false }: { mobileApp?: boolean }) {
 
   return (
     <main className={mobileApp ? 'native-app' : undefined}>
-      {!mobileApp && (
-        <>
-          <SidebarAd side="left" label={lang === 'th' ? 'โฆษณา' : 'SPONSORED'} />
-          <SidebarAd side="right" label={lang === 'th' ? 'โฆษณา' : 'SPONSORED'} />
-        </>
-      )}
       <header className="site-header">
         <div className="header-inner">
           <a className="brand" href="#top" aria-label="QR Lab">
@@ -544,51 +538,53 @@ export default function Home({ mobileApp = false }: { mobileApp?: boolean }) {
       <section className="hero" id="top">
         <div className="hero-orb orb-one" aria-hidden="true" />
         <div className="hero-orb orb-two" aria-hidden="true" />
-        <div className="hero-grid">
-          <div className="hero-copy">
-            <span className="eyebrow">
-              <i aria-hidden="true" /> {t.brand} — {t.tagline}
-            </span>
-            <h1>
-              {lang === 'th' ? (
-                <>
-                  ทุกลิงก์<br />
-                  พร้อม<span>สแกน.</span>
-                </>
-              ) : (
-                <>
-                  Every Link<br />
-                  Ready to <span>Scan.</span>
-                </>
-              )}
-            </h1>
-            <p>{t.heroDesc}</p>
+        <div className="hero-center-header">
+          <span className="eyebrow">
+            <i aria-hidden="true" /> {t.brand} — {t.tagline}
+          </span>
+          <h1>
+            {lang === 'th' ? (
+              <>
+                ทุกลิงก์ พร้อม<span>สแกน.</span>
+              </>
+            ) : (
+              <>
+                Every Link Ready to <span>Scan.</span>
+              </>
+            )}
+          </h1>
+          <p>{t.heroDesc}</p>
 
-            <div className="hero-action-buttons">
-              <a className="hero-link" href="#generator">
-                {t.ctaCreate} <span aria-hidden="true">↓</span>
-              </a>
-              <button
-                type="button"
-                className="hero-scan-btn"
-                onClick={() => setIsScannerOpen(true)}
-              >
-                📷 {t.ctaScan}
-              </button>
-            </div>
-
-            <div className="trust-row" aria-label="จุดเด่น">
-              <span>
-                <i aria-hidden="true">✓</i> {t.noWatermark}
-              </span>
-              <span>
-                <i aria-hidden="true">✓</i> {t.noExpiry}
-              </span>
-              <span>
-                <i aria-hidden="true">✓</i> {t.noDataCollect}
-              </span>
-            </div>
+          <div className="hero-action-buttons">
+            <a className="hero-link" href="#generator">
+              {t.ctaCreate} <span aria-hidden="true">↓</span>
+            </a>
+            <button
+              type="button"
+              className="hero-scan-btn"
+              onClick={() => setIsScannerOpen(true)}
+            >
+              📷 {t.ctaScan}
+            </button>
           </div>
+
+          <div className="trust-row" aria-label="จุดเด่น">
+            <span>
+              <i aria-hidden="true">✓</i> {t.noWatermark}
+            </span>
+            <span>
+              <i aria-hidden="true">✓</i> {t.noExpiry}
+            </span>
+            <span>
+              <i aria-hidden="true">✓</i> {t.noDataCollect}
+            </span>
+          </div>
+        </div>
+
+        <div className="hero-studio-layout">
+          {!mobileApp && (
+            <SidebarAd side="left" label={lang === 'th' ? 'โฆษณา' : 'SPONSORED'} />
+          )}
 
           <div className="generator-shell" id="generator">
             <div className="generator-head">
@@ -1143,6 +1139,10 @@ export default function Home({ mobileApp = false }: { mobileApp?: boolean }) {
               </div>
             </div>
           </div>
+
+          {!mobileApp && (
+            <SidebarAd side="right" label={lang === 'th' ? 'โฆษณา' : 'SPONSORED'} />
+          )}
         </div>
       </section>
 
