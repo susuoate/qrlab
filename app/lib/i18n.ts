@@ -151,6 +151,25 @@ export const translations = {
     faq3A: 'ไฟล์ SVG เป็นภาพเวกเตอร์ที่ขยายได้ไม่จำกัด เหมาะอย่างยิ่งสำหรับส่งให้โรงพิมพ์ทำป้ายไวนิล นามบัตร หรือติดหน้าร้าน',
     faq4Q: 'QR Code จะหมดอายุหรือไม่?',
     faq4A: 'ไม่หมดอายุ เป็น Static QR Code ที่เก็บข้อมูลไว้ในตัวโค้ดโดยตรง ใช้งานได้ตลอดไป',
+    faq5Q: 'สร้าง QR Code Wi-Fi ให้สแกนต่อเน็ตอัตโนมัติได้อย่างไร?',
+    faq5A: 'เลือกแท็บ Wi-Fi กรอกชื่อ Wi-Fi (SSID) และรหัสผ่าน จากนั้นดาวน์โหลด QR Code ไปตั้งหน้าร้านหรือในบ้าน ผู้ใช้งานสามารถใช้กล้องมือถือสแกนเพื่อเชื่อมต่ออินเทอร์เน็ตได้ทันทีโดยไม่ต้องพิมพ์รหัสผ่าน',
+    faq6Q: 'สามารถสแกน QR Code ออนไลน์ผ่านหน้าเว็บได้หรือไม่?',
+    faq6A: 'ได้ทันที โดยคลิกปุ่มสแกนเนอร์ที่แถบเมนูด้านบน รองรับทั้งเปิดกล้องสแกนสดและอัปโหลดรูปภาพ QR Code จากอุปกรณ์เพื่ออ่านข้อมูลและนำมาสร้างต่อได้ฟรี',
+
+    // Quick Solutions
+    solutionsKicker: 'QUICK SOLUTIONS',
+    solutionsHeading: 'รองรับการสร้าง QR Code ทุกรูปแบบที่คุณต้องการ',
+    solUrl: 'สร้าง QR Code ลิงก์ (URL)',
+    solPromptpay: 'สร้าง QR Code พร้อมเพย์',
+    solWifi: 'สร้าง QR Code Wi-Fi ฟรี',
+    solVcard: 'สร้าง QR Code นามบัตรดิจิทัล',
+    solSocial: 'สร้าง QR Code โซเชียลมีเดีย',
+    solTel: 'สร้าง QR Code เบอร์โทรศัพท์',
+    solText: 'สร้าง QR Code ข้อความ',
+    solSvg: 'QR Code เวกเตอร์ SVG สำหรับงานพิมพ์',
+    solNoExpiry: 'QR Code ไม่มีวันหมดอายุ',
+    solNoWatermark: 'QR Code ฟรี ไม่มีลายน้ำ',
+    solScanner: 'สแกน QR Code ออนไลน์',
 
     // Footer
     privacyPolicy: 'นโยบายความเป็นส่วนตัว',
@@ -327,6 +346,25 @@ export const translations = {
     faq3A: 'SVG is an infinite resolution vector graphic. It never pixelates when scaled up for vinyl signs, packaging, or professional print.',
     faq4Q: 'Do the generated QR codes expire?',
     faq4A: 'Never. These are static QR codes where data is embedded directly in the matrix.',
+    faq5Q: 'How do I create a Wi-Fi QR Code for automatic connection?',
+    faq5A: 'Select the Wi-Fi tab, enter your network SSID and password, then download the QR code. Guests can scan it with their phone camera to connect instantly without typing passwords.',
+    faq6Q: 'Can I scan QR codes online in the browser?',
+    faq6A: 'Yes, click the Scanner button in the top navigation. You can scan using your live camera or upload an image file to decode and edit immediately.',
+
+    // Quick Solutions
+    solutionsKicker: 'QUICK SOLUTIONS',
+    solutionsHeading: 'All-in-One QR Code Solutions for Every Need',
+    solUrl: 'URL & Website QR Code',
+    solPromptpay: 'PromptPay QR Code Generator',
+    solWifi: 'Free Wi-Fi QR Code',
+    solVcard: 'Digital Business Card (vCard)',
+    solSocial: 'Social Media QR Code',
+    solTel: 'Phone Call QR Code',
+    solText: 'Plain Text QR Code',
+    solSvg: 'Vector SVG QR for Print',
+    solNoExpiry: 'No Expiration Static QR',
+    solNoWatermark: 'Free QR with No Watermark',
+    solScanner: 'Online QR Code Scanner',
 
     // Footer
     privacyPolicy: 'Privacy Policy',

@@ -1280,6 +1280,115 @@ export default function Home({ mobileApp = false }: { mobileApp?: boolean }) {
             </summary>
             <p>{t.faq4A}</p>
           </details>
+          <details>
+            <summary>
+              {t.faq5Q}
+              <span>+</span>
+            </summary>
+            <p>{t.faq5A}</p>
+          </details>
+          <details>
+            <summary>
+              {t.faq6Q}
+              <span>+</span>
+            </summary>
+            <p>{t.faq6A}</p>
+          </details>
+        </div>
+      </section>
+
+      <section className="solutions-section">
+        <div className="solutions-inner">
+          <span className="section-kicker">{t.solutionsKicker}</span>
+          <h2>{t.solutionsHeading}</h2>
+          <div className="solutions-pills-grid" role="list">
+            <button
+              type="button"
+              className="solution-pill"
+              onClick={() => {
+                setQrType('url');
+                document.getElementById('generator')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+            >
+              🌐 {t.solUrl}
+            </button>
+            <button
+              type="button"
+              className="solution-pill"
+              onClick={() => {
+                setQrType('promptpay');
+                document.getElementById('generator')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+            >
+              ฿ {t.solPromptpay}
+            </button>
+            <button
+              type="button"
+              className="solution-pill"
+              onClick={() => {
+                setQrType('wifi');
+                document.getElementById('generator')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+            >
+              📶 {t.solWifi}
+            </button>
+            <button
+              type="button"
+              className="solution-pill"
+              onClick={() => {
+                setQrType('vcard');
+                document.getElementById('generator')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+            >
+              👤 {t.solVcard}
+            </button>
+            <button
+              type="button"
+              className="solution-pill"
+              onClick={() => {
+                setQrType('social');
+                document.getElementById('generator')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+            >
+              💬 {t.solSocial}
+            </button>
+            <button
+              type="button"
+              className="solution-pill"
+              onClick={() => {
+                setQrType('tel');
+                document.getElementById('generator')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+            >
+              📞 {t.solTel}
+            </button>
+            <button
+              type="button"
+              className="solution-pill"
+              onClick={() => {
+                setQrType('text');
+                document.getElementById('generator')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+            >
+              📝 {t.solText}
+            </button>
+            <a href="#generator" className="solution-pill">
+              ✨ {t.solSvg}
+            </a>
+            <a href="#generator" className="solution-pill">
+              ♾️ {t.solNoExpiry}
+            </a>
+            <a href="#generator" className="solution-pill">
+              🛡️ {t.solNoWatermark}
+            </a>
+            <button
+              type="button"
+              className="solution-pill"
+              onClick={() => setIsScannerOpen(true)}
+            >
+              📷 {t.solScanner}
+            </button>
+          </div>
         </div>
       </section>
 

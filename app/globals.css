@@ -240,6 +240,50 @@ fieldset { min-width: 0; margin: 0; padding: 0; border: 0; }
 .faq-list details[open] summary span { transform: rotate(45deg); }
 .faq-list p { max-width: 650px; margin: -3px 0 24px; color: var(--muted); font-size: 12px; line-height: 1.8; }
 
+.solutions-section {
+  padding: 80px max(24px, calc((100% - 1180px) / 2));
+  background: var(--paper);
+  border-top: 1px solid var(--line);
+}
+.solutions-inner {
+  max-width: 1180px;
+  margin: 0 auto;
+}
+.solutions-inner h2 {
+  margin: 14px 0 28px;
+  font-size: clamp(26px, 3.5vw, 42px);
+  letter-spacing: -.04em;
+  color: var(--ink-deep);
+}
+.solutions-pills-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.solution-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  background: white;
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 12.5px;
+  font-weight: 750;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all .2s ease;
+  box-shadow: 0 2px 6px rgba(0,0,0,.02);
+}
+.solution-pill:hover {
+  background: var(--ink);
+  color: white;
+  border-color: var(--ink);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(9,43,43,.12);
+}
+
 footer { display: flex; align-items: center; justify-content: space-between; min-height: 150px; padding: 34px max(24px, calc((100% - 1180px) / 2)); color: white; background: #061f20; border-top: 1px solid rgba(255,255,255,.08); }
 .footer-main { display: flex; align-items: center; gap: 28px; }
 .footer-main p { margin: 0; color: rgba(255,255,255,.42); font-size: 9px; }
