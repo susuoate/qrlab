@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
+import Link from 'next/link';
 import QRCode from 'qrcode';
 import HistoryModal from './components/HistoryModal';
 import LogoSelector from './components/LogoSelector';
@@ -47,13 +48,21 @@ function normalizeUrl(value: string) {
   return parsed.toString();
 }
 
-export default function Home({ mobileApp = false }: { mobileApp?: boolean }) {
+export default function Home({
+  mobileApp = false,
+  initialQrType = 'url',
+  initialScannerOpen = false,
+}: {
+  mobileApp?: boolean;
+  initialQrType?: QrType;
+  initialScannerOpen?: boolean;
+}) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [lang, setLang] = useState<Language>('th');
   const t = translations[lang];
 
   // QR Type & payloads
-  const [qrType, setQrType] = useState<QrType>('url');
+  const [qrType, setQrType] = useState<QrType>(initialQrType);
   const [url, setUrl] = useState('https://example.com');
   const [promptPayForm, setPromptPayForm] = useState<PromptPayForm>({
     targetType: 'mobile',
@@ -95,7 +104,7 @@ export default function Home({ mobileApp = false }: { mobileApp?: boolean }) {
   const [isNativeApp, setIsNativeApp] = useState(false);
 
   // Modals
-  const [isScannerOpen, setIsScannerOpen] = useState(false);
+  const [isScannerOpen, setIsScannerOpen] = useState(initialScannerOpen);
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
   const [historyItems, setHistoryItems] = useState<HistoryItem[]>([]);
 
@@ -1362,36 +1371,45 @@ export default function Home({ mobileApp = false }: { mobileApp?: boolean }) {
             >
               🌐 {t.solUrl}
             </button>
-            <button
-              type="button"
+            <Link
+              href="/promptpay"
               className="solution-pill"
-              onClick={() => {
-                setQrType('promptpay');
-                document.getElementById('generator')?.scrollIntoView({ behavior: 'smooth' });
+              onClick={(e) => {
+                if (typeof window !== 'undefined' && (window.location.pathname === '/' || window.location.pathname === '')) {
+                  e.preventDefault();
+                  setQrType('promptpay');
+                  document.getElementById('generator')?.scrollIntoView({ behavior: 'smooth' });
+                }
               }}
             >
               ฿ {t.solPromptpay}
-            </button>
-            <button
-              type="button"
+            </Link>
+            <Link
+              href="/wifi"
               className="solution-pill"
-              onClick={() => {
-                setQrType('wifi');
-                document.getElementById('generator')?.scrollIntoView({ behavior: 'smooth' });
+              onClick={(e) => {
+                if (typeof window !== 'undefined' && (window.location.pathname === '/' || window.location.pathname === '')) {
+                  e.preventDefault();
+                  setQrType('wifi');
+                  document.getElementById('generator')?.scrollIntoView({ behavior: 'smooth' });
+                }
               }}
             >
               📶 {t.solWifi}
-            </button>
-            <button
-              type="button"
+            </Link>
+            <Link
+              href="/vcard"
               className="solution-pill"
-              onClick={() => {
-                setQrType('vcard');
-                document.getElementById('generator')?.scrollIntoView({ behavior: 'smooth' });
+              onClick={(e) => {
+                if (typeof window !== 'undefined' && (window.location.pathname === '/' || window.location.pathname === '')) {
+                  e.preventDefault();
+                  setQrType('vcard');
+                  document.getElementById('generator')?.scrollIntoView({ behavior: 'smooth' });
+                }
               }}
             >
               👤 {t.solVcard}
-            </button>
+            </Link>
             <button
               type="button"
               className="solution-pill"
@@ -1431,13 +1449,18 @@ export default function Home({ mobileApp = false }: { mobileApp?: boolean }) {
             <a href="#generator" className="solution-pill">
               🛡️ {t.solNoWatermark}
             </a>
-            <button
-              type="button"
+            <Link
+              href="/scanner"
               className="solution-pill"
-              onClick={() => setIsScannerOpen(true)}
+              onClick={(e) => {
+                if (typeof window !== 'undefined' && (window.location.pathname === '/' || window.location.pathname === '')) {
+                  e.preventDefault();
+                  setIsScannerOpen(true);
+                }
+              }}
             >
               📷 {t.solScanner}
-            </button>
+            </Link>
           </div>
         </div>
       </section>
