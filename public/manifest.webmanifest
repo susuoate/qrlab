@@ -1,7 +1,7 @@
 {
-  "name": "QR LAB — สร้าง QR Code",
-  "short_name": "QR LAB",
-  "description": "สร้าง QR Code จาก URL และดาวน์โหลดเป็น PNG หรือ JPEG ได้ฟรีโดยไม่ต้องเข้าสู่ระบบ",
+  "name": "QR Code Generator & QR CODE Maker — สร้าง Qr code ง่ายนิดเดียว",
+  "short_name": "QR lab",
+  "description": "QR Code Generator & QR CODE Maker ระดับโปร — สร้าง Qr code ง่ายนิดเดียว ฟรี ไม่มีวันหมดอายุ",
   "id": "/",
   "start_url": "/?source=android-app",
   "scope": "/",

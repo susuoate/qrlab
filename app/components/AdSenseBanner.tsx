@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { useEffect, useRef } from 'react';
 
@@ -53,7 +53,7 @@ export default function AdSenseBanner({
             <div className="web-ad-banner-inner">
               <div className="ad-badge-orbit small">✦</div>
               <div className="ad-banner-copy">
-                <strong>QR LAB PRO — สแกน &amp; สร้าง QR Code ฟรี ไม่มีวันหมดอายุ</strong>
+                <strong>QR CODE Maker &amp; QR Code Generator — สร้าง Qr code ง่ายนิดเดียว</strong>
                 <small>รองรับเวกเตอร์ SVG คมชัดสูง ปลอดภัย ไม่เก็บข้อมูล</small>
               </div>
             </div>

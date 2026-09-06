@@ -3,8 +3,8 @@ import type { Language } from './types';
 export const translations = {
   th: {
     brand: 'QR lab QR CODE generator',
-    tagline: 'ทุกลิงก์ พร้อมสแกน',
-    heroDesc: 'สร้าง QR Code คมชัดระดับโปร รองรับทั้ง URL, พร้อมเพย์, Wi-Fi, โซเชียล และนามบัตร พร้อมสแกนเนอร์ในตัว',
+    tagline: 'QR CODE Maker & QR Code Generator',
+    heroDesc: 'QR CODE Maker และ QR Code Generator ระดับมืออาชีพ สร้าง Qr code ง่ายนิดเดียว คมชัดทั้ง URL, พร้อมเพย์, Wi-Fi, โซเชียล และนามบัตร พร้อมสแกนเนอร์ในตัว เวกเตอร์ SVG ไม่แตก ไม่มีวันหมดอายุ',
     ctaCreate: 'สร้าง QR ฟรี',
     ctaScan: 'สแกน QR Code',
     badgeLive: 'อัปเดตทันที',
@@ -122,8 +122,8 @@ export const translations = {
 
     // Steps & Features
     stepsTitle: 'ขั้นตอนการใช้งาน',
-    stepsHeading: 'ง่ายกว่าที่คิด เสร็จในไม่กี่วินาที',
-    stepsDesc: 'ไม่ต้องเรียนรู้เครื่องมือซับซ้อน เพียงเลือกประเภท ปรับสไตล์ และบันทึกไฟล์',
+    stepsHeading: 'สร้าง Qr code ง่ายนิดเดียว',
+    stepsDesc: 'QR CODE Maker & QR Code Generator ที่สะดวกรวดเร็วที่สุด เพียงเลือกประเภท ปรับสไตล์ และบันทึกไฟล์ได้ทันที',
     step1: 'เลือกประเภทและใส่ข้อมูล',
     step1Desc: 'รองรับทั้ง URL, พร้อมเพย์, Wi-Fi, เบอร์โทร และนามบัตร',
     step2: 'ปรับแต่งสไตล์และโลโก้',
@@ -179,8 +179,8 @@ export const translations = {
   },
   en: {
     brand: 'QR lab QR CODE generator',
-    tagline: 'Every Link, Ready to Scan',
-    heroDesc: 'Generate crisp, professional QR codes for URLs, PromptPay, Wi-Fi, Social, and Contacts with built-in scanner & vector SVG export.',
+    tagline: 'QR Code Generator & QR CODE Maker',
+    heroDesc: 'Professional QR CODE Maker & QR Code Generator. Create crisp, high-resolution QR codes for URLs, PromptPay, Wi-Fi, Social, and Contacts in seconds with built-in scanner & vector SVG export.',
     ctaCreate: 'Create QR Free',
     ctaScan: 'Scan QR Code',
     badgeLive: 'Instant Live Preview',
@@ -298,8 +298,8 @@ export const translations = {
 
     // Steps & Features
     stepsTitle: 'How It Works',
-    stepsHeading: 'Easier than you think, ready in seconds',
-    stepsDesc: 'No complicated software needed. Select type, customize style, and save.',
+    stepsHeading: 'Create QR codes easily in seconds',
+    stepsDesc: 'The easiest QR CODE Maker & QR Code Generator. No complicated software needed. Select type, customize style, and save.',
     step1: 'Choose Type & Input Data',
     step1Desc: 'Supports URLs, PromptPay, Wi-Fi, Phone, and digital vCard contacts.',
     step2: 'Customize Style & Logo',

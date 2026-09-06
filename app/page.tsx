@@ -546,11 +546,11 @@ export default function Home({ mobileApp = false }: { mobileApp?: boolean }) {
           <h1>
             {lang === 'th' ? (
               <>
-                ทุกลิงก์ พร้อม<span>สแกน.</span>
+                สร้าง Qr code <span>ง่ายนิดเดียว.</span>
               </>
             ) : (
               <>
-                Every Link Ready to <span>Scan.</span>
+                QR Code Generator &amp; <span>Maker.</span>
               </>
             )}
           </h1>
@@ -590,7 +590,7 @@ export default function Home({ mobileApp = false }: { mobileApp?: boolean }) {
           <div className="generator-shell" id="generator">
             <div className="generator-head">
               <div>
-                <span className="section-kicker">QR MAKER</span>
+                <span className="section-kicker">QR CODE MAKER &amp; GENERATOR</span>
                 <h2>QR lab Studio</h2>
               </div>
               <span className="live-badge">
