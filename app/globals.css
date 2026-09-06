@@ -281,6 +281,7 @@ footer { display: flex; align-items: center; justify-content: space-between; min
 
 @media (max-width: 680px) {
   .header-inner { width: min(100% - 28px, 1320px); height: 64px; }
+  .brand { font-size: 12px; letter-spacing: .05em; gap: 8px; }
   .header-cta { padding: 9px 12px; }
   .header-cta span { display: none; }
   .hero-grid { width: min(100% - 28px, 1320px); min-height: 0; padding: 58px 0 64px; gap: 45px; }
@@ -311,7 +312,12 @@ footer { display: flex; align-items: center; justify-content: space-between; min
   .feature-cards article:last-child { border-bottom: 0; }
   .feature-cards h3 { margin-top: 28px; }
   footer { min-height: 125px; }
-  .footer-main p { display: none; }
+}
+
+@media (max-width: 440px) {
+  .brand { font-size: 11px; letter-spacing: .02em; gap: 6px; }
+  .header-right-controls { gap: 8px; }
+  .header-cta { font-size: 10px; padding: 7px 10px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

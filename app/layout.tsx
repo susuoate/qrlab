@@ -7,8 +7,8 @@ const productionUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
 
 export const metadata: Metadata = {
   metadataBase: new URL(productionUrl),
-  applicationName: 'QR LAB',
-  title: 'QR LAB — สร้าง QR Code ฟรี ไม่มีวันหมดอายุ | พร้อมเพย์, Wi-Fi, นามบัตร, ลิงก์',
+  applicationName: 'QR lab QR CODE generator',
+  title: 'QR lab QR CODE generator — สร้าง QR Code ฟรี ไม่มีวันหมดอายุ | พร้อมเพย์, Wi-Fi, นามบัตร, ลิงก์',
   description: 'สร้าง QR Code ออนไลน์ฟรี ระดับมืออาชีพ คมชัดทั้ง PNG, JPEG และเวกเตอร์ SVG ไม่แตก รองรับพร้อมเพย์ (PromptPay), Wi-Fi, vCard นามบัตร, โซเชียล และเบอร์โทร ปลอดภัย 100% ประมวลผลบนเครื่องของคุณ ไม่เก็บข้อมูล',
   keywords: [
     'สร้าง qr code',
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: 'PlatoisPlutonian' }],
   creator: 'PlatoisPlutonian',
-  publisher: 'QR LAB',
+  publisher: 'QR lab QR CODE generator',
   manifest: '/manifest.webmanifest',
   alternates: {
     canonical: '/',
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: 'default',
-    title: 'QR LAB',
+    title: 'QR lab QR CODE generator',
   },
   formatDetection: {
     telephone: false,
@@ -49,19 +49,19 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'th_TH',
     url: '/',
-    siteName: 'QR LAB',
-    title: 'QR LAB — สร้าง QR Code ฟรี ไม่มีวันหมดอายุ (พร้อมเพย์, Wi-Fi, นามบัตร)',
+    siteName: 'QR lab QR CODE generator',
+    title: 'QR lab QR CODE generator — สร้าง QR Code ฟรี ไม่มีวันหมดอายุ (พร้อมเพย์, Wi-Fi, นามบัตร)',
     description: 'แปลงทุกลิงก์ พร้อมเพย์ และ Wi-Fi ให้เป็น QR Code ความละเอียดสูง คมชัด ปรับแต่งสีและโลโก้ได้ทันที 100% ฟรี',
     images: [{
       url: '/og.png',
       width: 1200,
       height: 630,
-      alt: 'QR LAB — สร้าง QR Code ฟรี ไม่มีวันหมดอายุ',
+      alt: 'QR lab QR CODE generator — สร้าง QR Code ฟรี ไม่มีวันหมดอายุ',
     }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'QR LAB — สร้าง QR Code ฟรี ไม่มีวันหมดอายุ',
+    title: 'QR lab QR CODE generator — สร้าง QR Code ฟรี ไม่มีวันหมดอายุ',
     description: 'สร้าง QR Code พร้อมเพย์, Wi-Fi, นามบัตร และ URL ฟรี คมชัดระดับเวกเตอร์ SVG ไม่แตก',
     images: ['/og.png'],
   },
@@ -92,7 +92,7 @@ const jsonLd = {
     {
       '@type': 'WebApplication',
       '@id': `${productionUrl}/#webapp`,
-      name: 'QR LAB',
+      name: 'QR lab QR CODE generator',
       url: productionUrl,
       applicationCategory: 'UtilityApplication',
       operatingSystem: 'All',
@@ -108,7 +108,7 @@ const jsonLd = {
       '@type': 'WebSite',
       '@id': `${productionUrl}/#website`,
       url: productionUrl,
-      name: 'QR LAB',
+      name: 'QR lab QR CODE generator',
       description: 'สร้าง QR Code ฟรี ไม่มีลายน้ำ ปรับแต่งสีและโลโก้ได้ตามต้องการ',
     },
   ],

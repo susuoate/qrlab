@@ -482,7 +482,7 @@ export default function Home({ mobileApp = false }: { mobileApp?: boolean }) {
     <main className={mobileApp ? 'native-app' : undefined}>
       <header className="site-header">
         <div className="header-inner">
-          <a className="brand" href="#top" aria-label="QR Lab">
+          <a className="brand" href="#top" aria-label="QR lab QR CODE generator">
             <span className="brand-mark" aria-hidden="true">
               <i />
               <i />
@@ -591,7 +591,7 @@ export default function Home({ mobileApp = false }: { mobileApp?: boolean }) {
             <div className="generator-head">
               <div>
                 <span className="section-kicker">QR MAKER</span>
-                <h2>{t.brand} Studio</h2>
+                <h2>QR lab Studio</h2>
               </div>
               <span className="live-badge">
                 <i /> {t.badgeLive}

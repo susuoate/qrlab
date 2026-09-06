@@ -2,7 +2,7 @@ import type { Language } from './types';
 
 export const translations = {
   th: {
-    brand: 'QR LAB',
+    brand: 'QR lab QR CODE generator',
     tagline: 'ทุกลิงก์ พร้อมสแกน',
     heroDesc: 'สร้าง QR Code คมชัดระดับโปร รองรับทั้ง URL, พร้อมเพย์, Wi-Fi, โซเชียล และนามบัตร พร้อมสแกนเนอร์ในตัว',
     ctaCreate: 'สร้าง QR ฟรี',
@@ -178,7 +178,7 @@ export const translations = {
     supportPrivacyFailed: 'เปิดการตั้งค่าความเป็นส่วนตัวไม่สำเร็จ',
   },
   en: {
-    brand: 'QR LAB',
+    brand: 'QR lab QR CODE generator',
     tagline: 'Every Link, Ready to Scan',
     heroDesc: 'Generate crisp, professional QR codes for URLs, PromptPay, Wi-Fi, Social, and Contacts with built-in scanner & vector SVG export.',
     ctaCreate: 'Create QR Free',
