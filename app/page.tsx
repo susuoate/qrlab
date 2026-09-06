@@ -99,12 +99,59 @@ export default function Home({ mobileApp = false }: { mobileApp?: boolean }) {
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
   const [historyItems, setHistoryItems] = useState<HistoryItem[]>([]);
 
-  // Load language and history from localStorage
+  // Load language and history: Auto-detect English for international users unless Thai is detected or saved
   useEffect(() => {
     try {
-      const savedLang = window.localStorage.getItem('qrlab_lang') as Language;
-      if (savedLang === 'th' || savedLang === 'en') {
-        setLang(savedLang);
+      // 1. Check URL query parameter first (?lang=en or ?lang=th)
+      if (typeof window !== 'undefined') {
+        const searchParams = new URLSearchParams(window.location.search);
+        const urlLang = searchParams.get('lang');
+        if (urlLang === 'th' || urlLang === 'en') {
+          setLang(urlLang);
+          window.localStorage.setItem('qrlab_lang', urlLang);
+          document.documentElement.lang = urlLang;
+          setHistoryItems(getHistory());
+          return;
+        }
+
+        // 2. Check saved user preference in localStorage
+        const savedLang = window.localStorage.getItem('qrlab_lang') as Language;
+        if (savedLang === 'th' || savedLang === 'en') {
+          setLang(savedLang);
+          document.documentElement.lang = savedLang;
+          setHistoryItems(getHistory());
+          return;
+        }
+
+        // 3. Auto-detect user: if user is not Thai, default to English ('en')
+        const userLangs: string[] = [];
+        if (typeof navigator !== 'undefined') {
+          if (navigator.language) userLangs.push(navigator.language.toLowerCase());
+          if (Array.isArray(navigator.languages)) {
+            navigator.languages.forEach((l) => {
+              if (l) userLangs.push(l.toLowerCase());
+            });
+          }
+        }
+
+        const isThaiLanguage = userLangs.some(
+          (l) => l === 'th' || l.startsWith('th-') || l === 'th_th'
+        );
+
+        let isThaiTimeZone = false;
+        try {
+          const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+          if (tz && tz.toLowerCase().includes('bangkok')) {
+            isThaiTimeZone = true;
+          }
+        } catch {
+          // Ignore
+        }
+
+        // If Thai language or Thai timezone, use 'th'; otherwise default to 'en'
+        const detectedLang: Language = (isThaiLanguage || isThaiTimeZone) ? 'th' : 'en';
+        setLang(detectedLang);
+        document.documentElement.lang = detectedLang;
       }
     } catch {
       // Ignore
@@ -116,6 +163,9 @@ export default function Home({ mobileApp = false }: { mobileApp?: boolean }) {
     setLang(nextLang);
     try {
       window.localStorage.setItem('qrlab_lang', nextLang);
+      if (typeof document !== 'undefined') {
+        document.documentElement.lang = nextLang;
+      }
     } catch {
       // Ignore
     }
