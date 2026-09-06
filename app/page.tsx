@@ -605,11 +605,11 @@ export default function Home({
           <h1>
             {lang === 'th' ? (
               <>
-                สร้าง Qr code <span>ง่ายนิดเดียว.</span>
+                ทำ QR Code ฟรี <span>สร้างง่ายนิดเดียว.</span>
               </>
             ) : (
               <>
-                QR Code Generator &amp; <span>Maker.</span>
+                Free QR Code Generator &amp; <span>Maker.</span>
               </>
             )}
           </h1>
