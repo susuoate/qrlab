@@ -102,6 +102,7 @@ export default function Home({
   const [copied, setCopied] = useState(false);
   const [downloaded, setDownloaded] = useState(false);
   const [isNativeApp, setIsNativeApp] = useState(false);
+  const [shareCopied, setShareCopied] = useState(false);
 
   // Modals
   const [isScannerOpen, setIsScannerOpen] = useState(initialScannerOpen);
@@ -1302,6 +1303,57 @@ export default function Home({
         </div>
       </section>
 
+      <section className="comparison-section" id="compare">
+        <div className="comparison-header">
+          <span className="section-kicker">{t.comparisonKicker}</span>
+          <h2>{t.comparisonTitle}</h2>
+          <p>{t.comparisonSubtitle}</p>
+        </div>
+        <div className="comparison-table-wrapper">
+          <table className="comparison-table">
+            <thead>
+              <tr>
+                <th>{t.thFeature}</th>
+                <th className="highlight-col">✨ {t.thQrlab}</th>
+                <th>{t.thOthers}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>{t.cmpRow1Feature}</strong></td>
+                <td className="highlight-cell"><span className="badge-check">✓</span> {t.cmpRow1Qrlab}</td>
+                <td className="dimmed-cell"><span className="badge-cross">✕</span> {t.cmpRow1Others}</td>
+              </tr>
+              <tr>
+                <td><strong>{t.cmpRow2Feature}</strong></td>
+                <td className="highlight-cell"><span className="badge-check">✓</span> {t.cmpRow2Qrlab}</td>
+                <td className="dimmed-cell"><span className="badge-cross">✕</span> {t.cmpRow2Others}</td>
+              </tr>
+              <tr>
+                <td><strong>{t.cmpRow3Feature}</strong></td>
+                <td className="highlight-cell"><span className="badge-check">✓</span> {t.cmpRow3Qrlab}</td>
+                <td className="dimmed-cell"><span className="badge-cross">✕</span> {t.cmpRow3Others}</td>
+              </tr>
+              <tr>
+                <td><strong>{t.cmpRow4Feature}</strong></td>
+                <td className="highlight-cell"><span className="badge-check">✓</span> {t.cmpRow4Qrlab}</td>
+                <td className="dimmed-cell"><span className="badge-cross">✕</span> {t.cmpRow4Others}</td>
+              </tr>
+              <tr>
+                <td><strong>{t.cmpRow5Feature}</strong></td>
+                <td className="highlight-cell"><span className="badge-check">✓</span> {t.cmpRow5Qrlab}</td>
+                <td className="dimmed-cell"><span className="badge-cross">✕</span> {t.cmpRow5Others}</td>
+              </tr>
+              <tr>
+                <td><strong>{t.cmpRow6Feature}</strong></td>
+                <td className="highlight-cell"><span className="badge-check">✓</span> {t.cmpRow6Qrlab}</td>
+                <td className="dimmed-cell"><span className="badge-cross">✕</span> {t.cmpRow6Others}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
       <section className="faq-section" id="faq">
         <div className="faq-intro">
           <span className="section-kicker">FAQ</span>
@@ -1410,16 +1462,33 @@ export default function Home({
             >
               👤 {t.solVcard}
             </Link>
-            <button
-              type="button"
+            <Link
+              href="/link"
               className="solution-pill"
-              onClick={() => {
-                setQrType('social');
-                document.getElementById('generator')?.scrollIntoView({ behavior: 'smooth' });
+              onClick={(e) => {
+                if (typeof window !== 'undefined' && (window.location.pathname === '/' || window.location.pathname === '')) {
+                  e.preventDefault();
+                  setQrType('url');
+                  document.getElementById('generator')?.scrollIntoView({ behavior: 'smooth' });
+                }
               }}
             >
-              💬 {t.solSocial}
-            </button>
+              🔗 {t.solLink}
+            </Link>
+            <Link
+              href="/line"
+              className="solution-pill"
+              onClick={(e) => {
+                if (typeof window !== 'undefined' && (window.location.pathname === '/' || window.location.pathname === '')) {
+                  e.preventDefault();
+                  setQrType('social');
+                  setSocialForm(prev => ({ ...prev, platform: 'line' }));
+                  document.getElementById('generator')?.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
+            >
+              💬 {t.solLine}
+            </Link>
             <button
               type="button"
               className="solution-pill"
@@ -1440,15 +1509,44 @@ export default function Home({
             >
               📝 {t.solText}
             </button>
-            <a href="#generator" className="solution-pill">
-              ✨ {t.solSvg}
-            </a>
-            <a href="#generator" className="solution-pill">
-              ♾️ {t.solNoExpiry}
-            </a>
-            <a href="#generator" className="solution-pill">
+            <Link
+              href="/permanent"
+              className="solution-pill"
+              onClick={(e) => {
+                if (typeof window !== 'undefined' && (window.location.pathname === '/' || window.location.pathname === '')) {
+                  e.preventDefault();
+                  setQrType('url');
+                  document.getElementById('generator')?.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
+            >
+              ♾️ {t.solPermanent}
+            </Link>
+            <Link
+              href="/no-watermark"
+              className="solution-pill"
+              onClick={(e) => {
+                if (typeof window !== 'undefined' && (window.location.pathname === '/' || window.location.pathname === '')) {
+                  e.preventDefault();
+                  setQrType('url');
+                  document.getElementById('generator')?.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
+            >
               🛡️ {t.solNoWatermark}
-            </a>
+            </Link>
+            <Link
+              href="/how-to"
+              className="solution-pill"
+              onClick={(e) => {
+                if (typeof window !== 'undefined' && (window.location.pathname === '/' || window.location.pathname === '')) {
+                  e.preventDefault();
+                  document.getElementById('how')?.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
+            >
+              📖 {t.solHowTo}
+            </Link>
             <Link
               href="/scanner"
               className="solution-pill"
@@ -1461,6 +1559,59 @@ export default function Home({
             >
               📷 {t.solScanner}
             </Link>
+          </div>
+        </div>
+      </section>
+
+      <section className="share-section">
+        <div className="share-card">
+          <div className="share-info">
+            <h3>{t.shareTitle}</h3>
+            <p>{t.bookmarkHint}</p>
+          </div>
+          <div className="share-buttons">
+            <button
+              type="button"
+              className="share-btn line"
+              onClick={() => {
+                if (typeof window !== 'undefined') {
+                  const shareUrl = window.location.href;
+                  const text = encodeURIComponent('QR Lab — ทำ QR Code ฟรี สร้างง่ายนิดเดียว ไม่มีวันหมดอายุ: ' + shareUrl);
+                  window.open(`https://line.me/R/msg/text/?${text}`, '_blank');
+                }
+              }}
+            >
+              💬 {t.shareLine}
+            </button>
+            <button
+              type="button"
+              className="share-btn fb"
+              onClick={() => {
+                if (typeof window !== 'undefined') {
+                  const shareUrl = encodeURIComponent(window.location.href);
+                  window.open(`https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`, '_blank');
+                }
+              }}
+            >
+              📘 {t.shareFb}
+            </button>
+            <button
+              type="button"
+              className="share-btn copy"
+              onClick={async () => {
+                if (typeof window !== 'undefined') {
+                  try {
+                    await navigator.clipboard.writeText(window.location.href);
+                    setShareCopied(true);
+                    setTimeout(() => setShareCopied(false), 2500);
+                  } catch {
+                    // ignore
+                  }
+                }
+              }}
+            >
+              🔗 {shareCopied ? t.shareCopied : t.shareCopy}
+            </button>
           </div>
         </div>
       </section>
