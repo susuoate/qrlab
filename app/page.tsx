@@ -27,6 +27,7 @@ import type {
   WifiForm,
 } from './lib/types';
 import SupportPanel from '../mobile/SupportPanel';
+import SidebarAd from './components/SidebarAd';
 
 const colorChoices = ['#123B3A', '#196B62', '#215391', '#20232B', '#702D54'];
 
@@ -478,6 +479,12 @@ export default function Home({ mobileApp = false }: { mobileApp?: boolean }) {
 
   return (
     <main className={mobileApp ? 'native-app' : undefined}>
+      {!mobileApp && (
+        <>
+          <SidebarAd side="left" label={lang === 'th' ? 'โฆษณา' : 'SPONSORED'} />
+          <SidebarAd side="right" label={lang === 'th' ? 'โฆษณา' : 'SPONSORED'} />
+        </>
+      )}
       <header className="site-header">
         <div className="header-inner">
           <a className="brand" href="#top" aria-label="QR Lab">
