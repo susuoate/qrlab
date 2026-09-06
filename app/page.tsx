@@ -28,6 +28,7 @@ import type {
 } from './lib/types';
 import SupportPanel from '../mobile/SupportPanel';
 import SidebarAd from './components/SidebarAd';
+import AdSenseBanner from './components/AdSenseBanner';
 
 const colorChoices = ['#123B3A', '#196B62', '#215391', '#20232B', '#702D54'];
 
@@ -1146,16 +1147,7 @@ export default function Home({ mobileApp = false }: { mobileApp?: boolean }) {
         </div>
 
         {!mobileApp && (
-          <div className="web-ad-horizontal" aria-label={lang === 'th' ? 'โฆษณา' : 'SPONSORED'}>
-            <span className="web-ad-tag">{lang === 'th' ? 'โฆษณา / SPONSORED' : 'SPONSORED'}</span>
-            <div className="web-ad-banner-inner">
-              <div className="ad-badge-orbit small">✦</div>
-              <div className="ad-banner-copy">
-                <strong>{lang === 'th' ? 'QR LAB PRO — สแกน & สร้าง QR Code ฟรี ไม่มีวันหมดอายุ' : 'QR LAB PRO — Scan & Create Free Lifetime QR Codes'}</strong>
-                <small>{lang === 'th' ? 'รองรับเวกเตอร์ SVG คมชัดสูง ปลอดภัย ไม่เก็บข้อมูล' : 'Supports crystal clear SVG vectors, 100% private and on-device'}</small>
-              </div>
-            </div>
-          </div>
+          <AdSenseBanner label={lang === 'th' ? 'โฆษณา / SPONSORED' : 'SPONSORED'} />
         )}
       </section>
 

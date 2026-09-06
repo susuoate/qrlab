@@ -122,6 +122,12 @@ export default function RootLayout({
   return (
     <html lang="th">
       <head>
+        {/* Google AdSense Script for Revenue Generation */}
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9961728700267165"
+          crossOrigin="anonymous"
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
