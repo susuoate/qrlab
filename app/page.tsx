@@ -356,7 +356,7 @@ export default function Home({ mobileApp = false }: { mobileApp?: boolean }) {
         const anchor = document.createElement('a');
         anchor.download = fileName;
         anchor.href = objectUrl;
-        document.body.append(anchor);
+        document.body.appendChild(anchor);
         anchor.click();
         anchor.remove();
         setTimeout(() => URL.revokeObjectURL(objectUrl), 1000);
@@ -399,7 +399,7 @@ export default function Home({ mobileApp = false }: { mobileApp?: boolean }) {
         const anchor = document.createElement('a');
         anchor.download = fileName;
         anchor.href = objectUrl;
-        document.body.append(anchor);
+        document.body.appendChild(anchor);
         anchor.click();
         anchor.remove();
         setTimeout(() => URL.revokeObjectURL(objectUrl), 1000);
