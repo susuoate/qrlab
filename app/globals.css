@@ -456,10 +456,66 @@ footer { display: flex; align-items: center; justify-content: space-between; min
   z-index: 20;
 }
 
-@media (min-width: 1380px) {
+@media (min-width: 1520px) {
   .web-ad-sidebar {
     display: block;
   }
+}
+
+/* ==========================================================================
+   Horizontal In-page Banner Ad (Universal & Clean)
+   ========================================================================== */
+.web-ad-horizontal {
+  width: min(100% - 32px, 1040px);
+  margin: 32px auto 0;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.03);
+  text-align: center;
+}
+
+.web-ad-horizontal .web-ad-tag {
+  display: block;
+  margin-bottom: 8px;
+}
+
+.web-ad-banner-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 14px 20px;
+  background: linear-gradient(90deg, #f7faf7 0%, #ffffff 100%);
+  border-radius: 12px;
+  border: 1px solid #e1ebe7;
+}
+
+.ad-badge-orbit.small {
+  width: 32px;
+  height: 32px;
+  font-size: 14px;
+  margin-bottom: 0;
+  flex-shrink: 0;
+}
+
+.ad-banner-copy {
+  text-align: left;
+}
+
+.ad-banner-copy strong {
+  display: block;
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.ad-banner-copy small {
+  color: #62726f;
+  font-size: 11px;
 }
 
 .web-ad-sticky {

@@ -1144,6 +1144,19 @@ export default function Home({ mobileApp = false }: { mobileApp?: boolean }) {
             <SidebarAd side="right" label={lang === 'th' ? 'โฆษณา' : 'SPONSORED'} />
           )}
         </div>
+
+        {!mobileApp && (
+          <div className="web-ad-horizontal" aria-label={lang === 'th' ? 'โฆษณา' : 'SPONSORED'}>
+            <span className="web-ad-tag">{lang === 'th' ? 'โฆษณา / SPONSORED' : 'SPONSORED'}</span>
+            <div className="web-ad-banner-inner">
+              <div className="ad-badge-orbit small">✦</div>
+              <div className="ad-banner-copy">
+                <strong>{lang === 'th' ? 'QR LAB PRO — สแกน & สร้าง QR Code ฟรี ไม่มีวันหมดอายุ' : 'QR LAB PRO — Scan & Create Free Lifetime QR Codes'}</strong>
+                <small>{lang === 'th' ? 'รองรับเวกเตอร์ SVG คมชัดสูง ปลอดภัย ไม่เก็บข้อมูล' : 'Supports crystal clear SVG vectors, 100% private and on-device'}</small>
+              </div>
+            </div>
+          </div>
+        )}
       </section>
 
       {mobileApp && <SupportPanel lang={lang} />}
