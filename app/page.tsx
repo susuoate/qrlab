@@ -760,7 +760,7 @@ export default function Home({
       // Watermark
       ctx.fillStyle = '#64748b';
       ctx.font = '500 22px Kanit, "Segoe UI", sans-serif';
-      ctx.fillText(`${t.standWatermark} • qrlab-green.vercel.app`, 600, 1460);
+      ctx.fillText(`${t.standWatermark} • qrcodemaker.me`, 600, 1460);
       ctx.restore();
 
       const fileName = `qrlab-stand-${standTemplate}.png`;
@@ -2149,7 +2149,7 @@ export default function Home({
           <a
             href={
               isNativeApp
-                ? 'https://qrlab-green.vercel.app/privacy'
+                ? 'https://qrcodemaker.me/privacy'
                 : '/privacy'
             }
             target={isNativeApp ? '_blank' : undefined}
