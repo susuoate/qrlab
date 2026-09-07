@@ -24,6 +24,7 @@ import type {
   PromptPayForm,
   QrType,
   SocialForm,
+  StandTemplate,
   VCardForm,
   WifiForm,
 } from './lib/types';
@@ -52,10 +53,12 @@ export default function Home({
   mobileApp = false,
   initialQrType = 'url',
   initialScannerOpen = false,
+  initialStandTemplate = 'none',
 }: {
   mobileApp?: boolean;
   initialQrType?: QrType;
   initialScannerOpen?: boolean;
+  initialStandTemplate?: StandTemplate;
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [lang, setLang] = useState<Language>('th');
@@ -108,6 +111,19 @@ export default function Home({
   const [isScannerOpen, setIsScannerOpen] = useState(initialScannerOpen);
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
   const [historyItems, setHistoryItems] = useState<HistoryItem[]>([]);
+
+  // Stand template & custom texts
+  const [standTemplate, setStandTemplate] = useState<StandTemplate>(initialStandTemplate);
+  const [standHeaderText, setStandHeaderText] = useState('');
+  const [standSubText, setStandSubText] = useState('');
+  const [standFooterText, setStandFooterText] = useState('');
+
+  // PWA Install prompt state
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+  const [showPwaBanner, setShowPwaBanner] = useState(false);
+  const [isIosDevice, setIsIosDevice] = useState(false);
+  const [showIosModal, setShowIosModal] = useState(false);
 
   // Load language and history: Auto-detect English for international users unless Thai is detected or saved
   useEffect(() => {
@@ -186,6 +202,91 @@ export default function Home({
       setIsNativeApp(Capacitor.isNativePlatform());
     });
   }, []);
+
+  // Effective stand texts based on template, inputs, and language
+  const effectiveStandHeader =
+    standHeaderText ||
+    (standTemplate === 'promptpay'
+      ? t.standDefaultPromptpayHeader
+      : standTemplate === 'wifi'
+      ? t.standDefaultWifiHeader
+      : standTemplate === 'menu'
+      ? t.standDefaultMenuHeader
+      : standTemplate === 'custom'
+      ? lang === 'th'
+        ? 'สแกนคิวอาร์โค้ด'
+        : 'SCAN QR CODE'
+      : '');
+
+  const effectiveStandSub =
+    standSubText ||
+    (standTemplate === 'promptpay' && promptPayForm.target
+      ? lang === 'th'
+        ? `พร้อมเพย์: ${promptPayForm.target}`
+        : `PromptPay: ${promptPayForm.target}`
+      : standTemplate === 'wifi' && wifiForm.ssid
+      ? `Wi-Fi: ${wifiForm.ssid}${wifiForm.password ? ` • ${lang === 'th' ? 'รหัส' : 'Pass'}: ${wifiForm.password}` : ''}`
+      : '');
+
+  const effectiveStandFooter =
+    standFooterText ||
+    (standTemplate === 'promptpay'
+      ? t.standDefaultPromptpayFooter
+      : standTemplate === 'wifi'
+      ? t.standDefaultWifiFooter
+      : standTemplate === 'menu'
+      ? t.standDefaultMenuFooter
+      : standTemplate === 'custom'
+      ? lang === 'th'
+        ? 'สแกนเพื่อเปิดข้อมูล'
+        : 'Scan to view details'
+      : '');
+
+  // PWA install prompt handler
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const isStandalone =
+      window.matchMedia('(display-mode: standalone)').matches ||
+      (window.navigator as unknown as { standalone?: boolean }).standalone === true;
+
+    if (isStandalone || mobileApp) return;
+
+    const ua = window.navigator.userAgent.toLowerCase();
+    const isIos =
+      /iphone|ipad|ipod/.test(ua) &&
+      !(window as unknown as { MSStream?: unknown }).MSStream;
+    setIsIosDevice(isIos);
+
+    const dismissed = window.localStorage.getItem('qrlab_pwa_dismissed');
+    const isDismissedRecently =
+      dismissed && Date.now() - Number(dismissed) < 7 * 24 * 60 * 60 * 1000;
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const handleBeforeInstall = (e: any) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+      if (!isDismissedRecently) {
+        setShowPwaBanner(true);
+      }
+    };
+
+    window.addEventListener('beforeinstallprompt', handleBeforeInstall);
+
+    if (isIos && !isDismissedRecently) {
+      const timer = setTimeout(() => {
+        setShowPwaBanner(true);
+      }, 3500);
+      return () => {
+        window.removeEventListener('beforeinstallprompt', handleBeforeInstall);
+        clearTimeout(timer);
+      };
+    }
+
+    return () => {
+      window.removeEventListener('beforeinstallprompt', handleBeforeInstall);
+    };
+  }, [mobileApp]);
 
   // Compute active payload based on active QR type
   useEffect(() => {
@@ -514,6 +615,192 @@ export default function Home({
     }
   };
 
+  const handleInstallPwa = async () => {
+    if (deferredPrompt) {
+      try {
+        await deferredPrompt.prompt();
+        const choice = await deferredPrompt.userChoice;
+        if (choice && choice.outcome === 'accepted') {
+          setShowPwaBanner(false);
+          setDeferredPrompt(null);
+        }
+      } catch {
+        setShowPwaBanner(false);
+      }
+    } else if (isIosDevice) {
+      setShowIosModal(true);
+    }
+  };
+
+  const handleDismissPwa = () => {
+    setShowPwaBanner(false);
+    try {
+      window.localStorage.setItem('qrlab_pwa_dismissed', Date.now().toString());
+    } catch {
+      // Ignore
+    }
+  };
+
+  const downloadStandPoster = async () => {
+    if (error || !activePayload) return;
+
+    try {
+      const qrCanvas = document.createElement('canvas');
+      await renderQr(activePayload, qrCanvas);
+
+      const posterCanvas = document.createElement('canvas');
+      posterCanvas.width = 1200;
+      posterCanvas.height = 1600;
+      const ctx = posterCanvas.getContext('2d');
+      if (!ctx) return;
+
+      const pad = 48;
+      const cardW = 1200 - pad * 2;
+      const cardH = 1600 - pad * 2;
+      const cardRadius = 36;
+
+      // Background
+      ctx.fillStyle = '#f8fafc';
+      ctx.fillRect(0, 0, 1200, 1600);
+
+      // Card Box with shadow and rounded corners
+      ctx.save();
+      ctx.beginPath();
+      if (typeof ctx.roundRect === 'function') {
+        ctx.roundRect(pad, pad, cardW, cardH, cardRadius);
+      } else {
+        ctx.rect(pad, pad, cardW, cardH);
+      }
+      ctx.fillStyle = '#FFFFFF';
+      ctx.shadowColor = 'rgba(15, 23, 42, 0.08)';
+      ctx.shadowBlur = 32;
+      ctx.shadowOffsetY = 16;
+      ctx.fill();
+      ctx.lineWidth = 3;
+      ctx.strokeStyle = '#e2e8f0';
+      ctx.stroke();
+      ctx.restore();
+
+      // Card Header Banner
+      const headerH = 290;
+      ctx.save();
+      ctx.beginPath();
+      if (typeof ctx.roundRect === 'function') {
+        ctx.roundRect(pad, pad, cardW, headerH, [cardRadius, cardRadius, 0, 0]);
+      } else {
+        ctx.rect(pad, pad, cardW, headerH);
+      }
+      ctx.clip();
+
+      const headerGrad = ctx.createLinearGradient(pad, pad, pad + cardW, pad + headerH);
+      if (standTemplate === 'promptpay') {
+        headerGrad.addColorStop(0, '#003d6b');
+        headerGrad.addColorStop(1, '#001a33');
+      } else if (standTemplate === 'wifi') {
+        headerGrad.addColorStop(0, '#0284c7');
+        headerGrad.addColorStop(1, '#0369a1');
+      } else if (standTemplate === 'menu') {
+        headerGrad.addColorStop(0, '#b45309');
+        headerGrad.addColorStop(1, '#78350f');
+      } else {
+        headerGrad.addColorStop(0, '#0f172a');
+        headerGrad.addColorStop(1, '#1e293b');
+      }
+      ctx.fillStyle = headerGrad;
+      ctx.fillRect(pad, pad, cardW, headerH);
+
+      // Header Text
+      ctx.fillStyle = '#FFFFFF';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.font = 'bold 58px Kanit, "Segoe UI", sans-serif';
+      ctx.fillText(effectiveStandHeader, 600, pad + 115);
+
+      if (effectiveStandSub) {
+        ctx.font = '500 32px Kanit, "Segoe UI", sans-serif';
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.92)';
+        ctx.fillText(effectiveStandSub, 600, pad + 195);
+      }
+      ctx.restore();
+
+      // QR Code Box
+      const qrBoxSize = 740;
+      const qrBoxX = (1200 - qrBoxSize) / 2;
+      const qrBoxY = 410;
+
+      ctx.save();
+      ctx.fillStyle = '#FFFFFF';
+      ctx.beginPath();
+      if (typeof ctx.roundRect === 'function') {
+        ctx.roundRect(qrBoxX, qrBoxY, qrBoxSize, qrBoxSize, 24);
+      } else {
+        ctx.rect(qrBoxX, qrBoxY, qrBoxSize, qrBoxSize);
+      }
+      ctx.shadowColor = 'rgba(0, 0, 0, 0.05)';
+      ctx.shadowBlur = 20;
+      ctx.shadowOffsetY = 8;
+      ctx.fill();
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = '#e2e8f0';
+      ctx.stroke();
+      ctx.restore();
+
+      const qrDrawSize = 670;
+      const qrDrawOffset = (qrBoxSize - qrDrawSize) / 2;
+      ctx.drawImage(qrCanvas, qrBoxX + qrDrawOffset, qrBoxY + qrDrawOffset, qrDrawSize, qrDrawSize);
+
+      // Footer instruction
+      ctx.save();
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillStyle = '#0f172a';
+      ctx.font = 'bold 36px Kanit, "Segoe UI", sans-serif';
+      ctx.fillText(effectiveStandFooter, 600, 1260);
+
+      // Watermark
+      ctx.fillStyle = '#64748b';
+      ctx.font = '500 22px Kanit, "Segoe UI", sans-serif';
+      ctx.fillText(`${t.standWatermark} • qrlab.vercel.app`, 600, 1460);
+      ctx.restore();
+
+      const fileName = `qrlab-stand-${standTemplate}.png`;
+      if (isNativeApp) {
+        const dataUrl = posterCanvas.toDataURL('image/png', 0.95);
+        const [{ Directory, Filesystem }, { Share }, { Haptics, ImpactStyle }] = await Promise.all([
+          import('@capacitor/filesystem'),
+          import('@capacitor/share'),
+          import('@capacitor/haptics'),
+        ]);
+        const savedFile = await Filesystem.writeFile({
+          path: fileName,
+          data: dataUrl.split(',')[1],
+          directory: Directory.Cache,
+        });
+        await Haptics.impact({ style: ImpactStyle.Light });
+        await Share.share({
+          title: effectiveStandHeader,
+          text: effectiveStandFooter,
+          url: savedFile.uri,
+          dialogTitle: lang === 'th' ? 'บันทึกรูปป้ายตั้งโต๊ะ' : 'Save Stand Poster',
+        });
+      } else {
+        posterCanvas.toBlob((blob) => {
+          if (!blob) return;
+          const objectUrl = URL.createObjectURL(blob);
+          const anchor = document.createElement('a');
+          anchor.download = fileName;
+          anchor.href = objectUrl;
+          document.body.appendChild(anchor);
+          anchor.click();
+          anchor.remove();
+          setTimeout(() => URL.revokeObjectURL(objectUrl), 1000);
+        }, 'image/png');
+      }
+    } catch (err) {
+      console.error('Failed to download stand poster', err);
+    }
+  };
+
   const handleFieldClick = (e: React.MouseEvent<HTMLDivElement>) => {
     const target = e.target as HTMLElement;
     if (target.tagName !== 'INPUT' && target.tagName !== 'TEXTAREA' && target.tagName !== 'BUTTON') {
@@ -540,6 +827,36 @@ export default function Home({
 
   return (
     <main className={mobileApp ? 'native-app' : undefined}>
+      {showPwaBanner && (
+        <aside className="pwa-install-banner" aria-label={t.pwaBannerTitle}>
+          <div className="pwa-banner-content">
+            <span className="pwa-banner-icon" aria-hidden="true">📲</span>
+            <div className="pwa-banner-text">
+              <strong>{t.pwaBannerTitle}</strong>
+              <p>{t.pwaBannerDesc}</p>
+            </div>
+          </div>
+          <div className="pwa-banner-actions">
+            <button
+              type="button"
+              className="pwa-btn-primary"
+              onClick={handleInstallPwa}
+            >
+              {t.pwaInstallBtn}
+            </button>
+            <button
+              type="button"
+              className="pwa-btn-dismiss"
+              onClick={handleDismissPwa}
+              title={t.pwaDismiss}
+              aria-label={t.pwaDismiss}
+            >
+              ✕
+            </button>
+          </div>
+        </aside>
+      )}
+
       <header className="site-header">
         <div className="header-inner">
           <a className="brand" href="#top" aria-label="QR lab QR CODE generator">
@@ -552,6 +869,15 @@ export default function Home({
           </a>
 
           <nav aria-label="เมนูหลัก">
+            {(deferredPrompt || isIosDevice) && !mobileApp && (
+              <button
+                type="button"
+                className="nav-action-btn nav-pwa-btn"
+                onClick={handleInstallPwa}
+              >
+                📲 {t.pwaInstallBtn}
+              </button>
+            )}
             <button
               type="button"
               className="nav-action-btn"
@@ -1133,6 +1459,100 @@ export default function Home({
                   uploadCustomText={t.uploadCustomLogo}
                   removeLogoText={t.removeLogo}
                 />
+
+                {/* PRINTABLE STAND SELECTOR */}
+                <div className="divider" />
+                <div className="stand-selector-section">
+                  <label className="field-label">{t.standSectionTitle}</label>
+                  <div className="stand-templates-grid">
+                    <button
+                      type="button"
+                      className={`stand-pill ${standTemplate === 'none' ? 'active' : ''}`}
+                      onClick={() => setStandTemplate('none')}
+                    >
+                      <span>🔘</span> {t.standNone}
+                    </button>
+                    <button
+                      type="button"
+                      className={`stand-pill ${standTemplate === 'promptpay' ? 'active' : ''}`}
+                      onClick={() => {
+                        setStandTemplate('promptpay');
+                        if (qrType !== 'promptpay') setQrType('promptpay');
+                      }}
+                    >
+                      <span>💳</span> {t.standPromptpay}
+                    </button>
+                    <button
+                      type="button"
+                      className={`stand-pill ${standTemplate === 'wifi' ? 'active' : ''}`}
+                      onClick={() => {
+                        setStandTemplate('wifi');
+                        if (qrType !== 'wifi') setQrType('wifi');
+                      }}
+                    >
+                      <span>📶</span> {t.standWifi}
+                    </button>
+                    <button
+                      type="button"
+                      className={`stand-pill ${standTemplate === 'menu' ? 'active' : ''}`}
+                      onClick={() => setStandTemplate('menu')}
+                    >
+                      <span>🍽️</span> {t.standMenu}
+                    </button>
+                    <button
+                      type="button"
+                      className={`stand-pill ${standTemplate === 'custom' ? 'active' : ''}`}
+                      onClick={() => setStandTemplate('custom')}
+                    >
+                      <span>✏️</span> {t.standCustom}
+                    </button>
+                  </div>
+
+                  {standTemplate !== 'none' && (
+                    <div className="stand-custom-inputs mt-3">
+                      <label className="field-label mt-2" htmlFor="stand-header-input">
+                        {t.standHeaderLabel}
+                      </label>
+                      <div className="url-field" onClick={handleFieldClick}>
+                        <input
+                          id="stand-header-input"
+                          value={standHeaderText}
+                          onChange={(e) => setStandHeaderText(e.target.value)}
+                          placeholder={effectiveStandHeader}
+                        />
+                      </div>
+
+                      <label className="field-label mt-2" htmlFor="stand-sub-input">
+                        {t.standSubLabel}
+                      </label>
+                      <div className="url-field" onClick={handleFieldClick}>
+                        <input
+                          id="stand-sub-input"
+                          value={standSubText}
+                          onChange={(e) => setStandSubText(e.target.value)}
+                          placeholder={
+                            effectiveStandSub ||
+                            (lang === 'th'
+                              ? 'เช่น รายละเอียดร้านค้า หรือโทร'
+                              : 'e.g. Details or phone')
+                          }
+                        />
+                      </div>
+
+                      <label className="field-label mt-2" htmlFor="stand-footer-input">
+                        {t.standFooterLabel}
+                      </label>
+                      <div className="url-field" onClick={handleFieldClick}>
+                        <input
+                          id="stand-footer-input"
+                          value={standFooterText}
+                          onChange={(e) => setStandFooterText(e.target.value)}
+                          placeholder={effectiveStandFooter}
+                        />
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
 
               {/* PREVIEW PANEL */}
@@ -1142,19 +1562,75 @@ export default function Home({
                   <b>{imageFormat.toUpperCase()}</b>
                 </div>
 
-                <div className="qr-stage">
-                  <span className="scan-line" aria-hidden="true" />
-                  <canvas
-                    ref={canvasRef}
-                    aria-label={`QR Code for ${activePayload}`}
-                  />
-                </div>
+                {standTemplate === 'none' ? (
+                  <div className="qr-stage">
+                    <span className="scan-line" aria-hidden="true" />
+                    <canvas
+                      ref={canvasRef}
+                      aria-label={`QR Code for ${activePayload}`}
+                    />
+                  </div>
+                ) : (
+                  <div className={`print-stand-card stand-theme-${standTemplate}`}>
+                    <div className="stand-card-header">
+                      <span className="stand-card-badge">
+                        {standTemplate === 'promptpay' && '💳 '}
+                        {standTemplate === 'wifi' && '📶 '}
+                        {standTemplate === 'menu' && '🍽️ '}
+                        {standTemplate === 'custom' && '📱 '}
+                        {effectiveStandHeader}
+                      </span>
+                      {effectiveStandSub && (
+                        <span className="stand-card-sub">{effectiveStandSub}</span>
+                      )}
+                    </div>
+
+                    <div className="stand-card-body">
+                      <div className="stand-qr-box">
+                        <canvas
+                          ref={canvasRef}
+                          aria-label={`QR Code for ${activePayload}`}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="stand-card-footer">
+                      <p className="stand-footer-text">{effectiveStandFooter}</p>
+                      <span className="stand-watermark-text">
+                        {t.standWatermark}
+                      </span>
+                    </div>
+                  </div>
+                )}
 
                 <p className="preview-url" title={activePayload}>
                   {activePayload}
                 </p>
 
                 <div className="preview-action-buttons">
+                  {standTemplate !== 'none' && (
+                    <div className="stand-actions-group">
+                      <button
+                        className="stand-print-button"
+                        type="button"
+                        onClick={() => window.print()}
+                        disabled={Boolean(error)}
+                      >
+                        <span className="button-icon" aria-hidden="true">🖨️</span>
+                        <span>{t.standPrintBtn}</span>
+                      </button>
+                      <button
+                        className="stand-download-button"
+                        type="button"
+                        onClick={downloadStandPoster}
+                        disabled={Boolean(error)}
+                      >
+                        <span className="button-icon" aria-hidden="true">🖼️</span>
+                        <span>{t.standDownloadBtn}</span>
+                      </button>
+                    </div>
+                  )}
+
                   <button
                     className="download-button"
                     type="button"
@@ -1559,6 +2035,47 @@ export default function Home({
             >
               📷 {t.solScanner}
             </Link>
+            <Link
+              href="/menu"
+              className="solution-pill"
+              onClick={(e) => {
+                if (typeof window !== 'undefined' && (window.location.pathname === '/' || window.location.pathname === '')) {
+                  e.preventDefault();
+                  setQrType('url');
+                  setStandTemplate('menu');
+                  document.getElementById('generator')?.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
+            >
+              🍽️ {t.solMenu}
+            </Link>
+            <Link
+              href="/google-form"
+              className="solution-pill"
+              onClick={(e) => {
+                if (typeof window !== 'undefined' && (window.location.pathname === '/' || window.location.pathname === '')) {
+                  e.preventDefault();
+                  setQrType('url');
+                  document.getElementById('generator')?.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
+            >
+              📋 {t.solGoogleForm}
+            </Link>
+            <Link
+              href="/wedding"
+              className="solution-pill"
+              onClick={(e) => {
+                if (typeof window !== 'undefined' && (window.location.pathname === '/' || window.location.pathname === '')) {
+                  e.preventDefault();
+                  setQrType('promptpay');
+                  setStandTemplate('promptpay');
+                  document.getElementById('generator')?.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
+            >
+              💒 {t.solWedding}
+            </Link>
           </div>
         </div>
       </section>
@@ -1666,6 +2183,92 @@ export default function Home({
         }}
         lang={lang}
       />
+
+      {showIosModal && (
+        <div
+          className="modal-backdrop"
+          onClick={() => setShowIosModal(false)}
+          role="dialog"
+          aria-modal="true"
+        >
+          <div
+            className="modal-card ios-prompt-modal"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="modal-header">
+              <div className="modal-title-group">
+                <span className="modal-title-icon" aria-hidden="true">
+                  📲
+                </span>
+                <h3 className="modal-title">
+                  {lang === 'th'
+                    ? 'ติดตั้ง QR Lab บน iPhone / iPad'
+                    : 'Install QR Lab on iPhone / iPad'}
+                </h3>
+              </div>
+              <button
+                type="button"
+                className="modal-close-btn"
+                onClick={() => setShowIosModal(false)}
+                aria-label="Close"
+              >
+                ✕
+              </button>
+            </div>
+            <div className="ios-prompt-body">
+              <div className="ios-step-row">
+                <span className="ios-step-num">1</span>
+                <p>
+                  {lang === 'th' ? (
+                    <>
+                      แตะปุ่มแชร์ <strong>[↑] (Share)</strong> ที่แถบล่างสุดของเบราว์เซอร์ Safari
+                    </>
+                  ) : (
+                    <>
+                      Tap the <strong>[↑] (Share)</strong> button at the bottom bar in Safari
+                    </>
+                  )}
+                </p>
+              </div>
+              <div className="ios-step-row">
+                <span className="ios-step-num">2</span>
+                <p>
+                  {lang === 'th' ? (
+                    <>
+                      เลื่อนลงมาแล้วแตะเลือก <strong>&quot;เพิ่มไปยังหน้าจอโฮม&quot; (Add to Home Screen)</strong>
+                    </>
+                  ) : (
+                    <>
+                      Scroll down and tap <strong>&quot;Add to Home Screen&quot;</strong>
+                    </>
+                  )}
+                </p>
+              </div>
+              <div className="ios-step-row">
+                <span className="ios-step-num">3</span>
+                <p>
+                  {lang === 'th' ? (
+                    <>
+                      แตะปุ่ม <strong>&quot;เพิ่ม&quot; (Add)</strong> มุมขวาบน เพื่อเริ่มใช้งานเสมือนแอปจริงทันที
+                    </>
+                  ) : (
+                    <>
+                      Tap <strong>&quot;Add&quot;</strong> in the top-right corner to launch directly from your home screen
+                    </>
+                  )}
+                </p>
+              </div>
+              <button
+                type="button"
+                className="ios-modal-done-btn"
+                onClick={() => setShowIosModal(false)}
+              >
+                {lang === 'th' ? 'เข้าใจแล้ว' : 'Got it'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   );
 }

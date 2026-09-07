@@ -174,6 +174,36 @@ export const translations = {
     solLink: 'แปลงลิงก์เป็น QR Code ฟรี',
     solLine: 'สร้าง QR Code LINE เพิ่มเพื่อน',
     solHowTo: 'วิธีทำ QR Code ใน 3 ขั้นตอน',
+    solMenu: 'สร้าง QR Code เมนูอาหาร',
+    solGoogleForm: 'สร้าง QR Code Google Form / ส่งงาน',
+    solWedding: 'สร้าง QR Code งานแต่งงาน / ซองบุญ',
+
+    // Print Stand Frames
+    standSectionTitle: 'กรอบป้ายตั้งโต๊ะพร้อมพิมพ์ (Print Stand)',
+    standNone: 'ไม่ใส่กรอบ (QR เพียวๆ)',
+    standPromptpay: 'ป้ายพร้อมเพย์สแกนจ่าย',
+    standWifi: 'ป้าย Free Wi-Fi ต่อเน็ต',
+    standMenu: 'ป้ายสแกนดูเมนูอาหาร',
+    standCustom: 'ป้ายกำหนดข้อความเอง',
+    standHeaderLabel: 'ข้อความหัวป้าย',
+    standSubLabel: 'ข้อความย่อย / รายละเอียด',
+    standFooterLabel: 'ข้อความท้ายป้าย',
+    standPrintBtn: '🖨️ สั่งพิมพ์ป้าย (A4 / A5)',
+    standDownloadBtn: '🖼️ บันทึกรูปป้าย',
+    standDefaultPromptpayHeader: 'สแกนจ่ายเงินที่นี่',
+    standDefaultPromptpayFooter: 'ยินดีรับทุกธนาคาร • ไม่มีค่าธรรมเนียม',
+    standDefaultWifiHeader: 'FREE WI-FI',
+    standDefaultWifiFooter: 'สแกนเพื่อเชื่อมต่ออินเทอร์เน็ตทันที',
+    standDefaultMenuHeader: 'SCAN FOR MENU',
+    standDefaultMenuFooter: 'สแกนดูเมนูอาหารและโปรโมชั่น',
+    standWatermark: 'สร้างป้ายฟรีที่ QR Lab',
+
+    // PWA Install Prompt
+    pwaBannerTitle: 'ติดตั้ง QR Lab ลงหน้าจอมือถือ',
+    pwaBannerDesc: 'เปิดสร้าง QR Code ได้สะดวกรวดเร็วตลอดเวลา ไม่ต้องพิมพ์ค้นหาใหม่',
+    pwaInstallBtn: '📲 ติดตั้งแอปฟรี',
+    pwaDismiss: 'ไว้คราวหน้า',
+    pwaIosHint: 'สำหรับ iPhone/iPad: แตะปุ่มแชร์ [↑] ด้านล่างของ Safari แล้วเลือก "เพิ่มไปยังหน้าจอโฮม"',
 
     // Comparison Table
     comparisonKicker: 'WHY CHOOSE US',
@@ -407,6 +437,36 @@ export const translations = {
     solLink: 'Convert Link / URL to QR Code',
     solLine: 'Create LINE Contact QR Code',
     solHowTo: 'How to Make a QR Code in 3 Steps',
+    solMenu: 'Restaurant Menu QR Code',
+    solGoogleForm: 'Google Form & Survey QR Code',
+    solWedding: 'Wedding & Gift QR Code',
+
+    // Print Stand Frames
+    standSectionTitle: 'Printable Table Stand Frame',
+    standNone: 'No Frame (Clean QR)',
+    standPromptpay: 'PromptPay Pay Stand',
+    standWifi: 'Free Wi-Fi Table Stand',
+    standMenu: 'Restaurant Menu Stand',
+    standCustom: 'Custom Text Stand',
+    standHeaderLabel: 'Header Title',
+    standSubLabel: 'Subtitle / Details',
+    standFooterLabel: 'Footer Note',
+    standPrintBtn: '🖨️ Print Stand (A4 / A5)',
+    standDownloadBtn: '🖼️ Save Poster Image',
+    standDefaultPromptpayHeader: 'SCAN TO PAY HERE',
+    standDefaultPromptpayFooter: 'Accepts All Banking Apps • No Fee',
+    standDefaultWifiHeader: 'FREE WI-FI',
+    standDefaultWifiFooter: 'Scan to connect to internet automatically',
+    standDefaultMenuHeader: 'SCAN FOR MENU',
+    standDefaultMenuFooter: 'View digital menu & order food',
+    standWatermark: 'Created free with QR Lab',
+
+    // PWA Install Prompt
+    pwaBannerTitle: 'Install QR Lab on Your Phone',
+    pwaBannerDesc: 'Create QR codes anytime with 1 tap from your home screen.',
+    pwaInstallBtn: '📲 Install Free App',
+    pwaDismiss: 'Maybe Later',
+    pwaIosHint: 'For iPhone/iPad: Tap the Share button [↑] in Safari, then tap "Add to Home Screen"',
 
     // Comparison Table
     comparisonKicker: 'WHY CHOOSE US',

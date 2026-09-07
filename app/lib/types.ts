@@ -54,3 +54,13 @@ export interface HistoryItem {
   format: ImageFormat;
   createdAt: number;
 }
+
+export type StandTemplate = 'none' | 'promptpay' | 'wifi' | 'menu' | 'custom';
+
+export interface StandConfig {
+  template: StandTemplate;
+  headerText: string;
+  subText: string;
+  footerText: string;
+}
+
