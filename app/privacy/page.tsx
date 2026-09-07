@@ -1,21 +1,21 @@
 import Link from 'next/link';
 
 export const metadata = {
-  title: 'นโยบายความเป็นส่วนตัว — QR LAB',
-  description: 'นโยบายความเป็นส่วนตัวของแอป QR LAB สำหรับเว็บ, iOS และ Android',
+  title: 'นโยบายความเป็นส่วนตัว — QR Code Maker',
+  description: 'นโยบายความเป็นส่วนตัวของแอป QR Code Maker สำหรับเว็บ, iOS และ Android',
 };
 
 export default function PrivacyPage() {
   return (
     <main className="privacy-page">
-      <Link className="privacy-brand" href="/">QR LAB</Link>
+      <Link className="privacy-brand" href="/">QR Code Maker</Link>
       <article>
         <p className="section-kicker">PRIVACY POLICY</p>
         <h1>นโยบายความเป็นส่วนตัว</h1>
         <p className="privacy-date">มีผลตั้งแต่วันที่ 30 สิงหาคม 2026</p>
 
-        <h2>ข้อมูลที่ QR LAB ประมวลผล</h2>
-        <p>QR LAB ไม่ต้องสมัครสมาชิก ลิงก์ สี ขนาด และ QR Code ที่คุณสร้างจะถูกประมวลผลภายในอุปกรณ์และไม่ถูกส่งไปยังเซิร์ฟเวอร์ของ QR LAB</p>
+        <h2>ข้อมูลที่ QR Code Maker ประมวลผล</h2>
+        <p>QR Code Maker ไม่ต้องสมัครสมาชิก ลิงก์ สี ขนาด และ QR Code ที่คุณสร้างจะถูกประมวลผลภายในอุปกรณ์และไม่ถูกส่งไปยังเซิร์ฟเวอร์ของ QR Code Maker</p>
 
         <h2>การบันทึกและแชร์ไฟล์</h2>
         <p>เมื่อคุณบันทึกหรือแชร์ไฟล์ PNG/JPEG แอปจะสร้างไฟล์ชั่วคราวบนอุปกรณ์ และจะแชร์ไปยังแอปหรือบริการที่คุณเลือกเท่านั้น บริการปลายทางนั้นมีนโยบายความเป็นส่วนตัวของตนเอง</p>
@@ -27,13 +27,13 @@ export default function PrivacyPage() {
         <p>การสนับสนุนราคา 49 หรือ 100 บาทเป็นการซื้อในแอปแบบครั้งเดียวผ่าน Apple App Store หรือ Google Play ผู้สนับสนุนจะได้รับสิทธิ์ไม่มีโฆษณาถาวร RevenueCat ช่วยตรวจสอบใบเสร็จและสถานะสิทธิ์โดยใช้รหัสผู้ใช้แบบไม่ระบุตัวตน ข้อมูลธุรกรรมถูกจัดการตามนโยบายของ Store และ RevenueCat</p>
 
         <h2>การกู้คืนการซื้อ</h2>
-        <p>คุณสามารถกู้คืนสิทธิ์ด้วยบัญชี Apple หรือ Google เดิมได้โดยไม่ต้องสร้างบัญชี QR LAB สิทธิ์จะไม่ซิงก์ข้ามระหว่าง iOS และ Android เนื่องจากแอปไม่มีระบบเข้าสู่ระบบ</p>
+        <p>คุณสามารถกู้คืนสิทธิ์ด้วยบัญชี Apple หรือ Google เดิมได้โดยไม่ต้องสร้างบัญชี QR Code Maker สิทธิ์จะไม่ซิงก์ข้ามระหว่าง iOS และ Android เนื่องจากแอปไม่มีระบบเข้าสู่ระบบ</p>
 
         <h2>การเปลี่ยนแปลงนโยบาย</h2>
         <p>หากการทำงานของแอปเปลี่ยนไป เราจะปรับปรุงหน้านี้และระบุวันที่มีผลฉบับล่าสุด</p>
 
         <h2>ติดต่อ</h2>
-        <p>แจ้งคำถามหรือปัญหาได้ที่ <a href="https://github.com/susuoate/qrlab/issues">GitHub Issues ของ QR LAB</a></p>
+        <p>แจ้งคำถามหรือปัญหาได้ที่ <a href="https://github.com/susuoate/qrlab/issues">GitHub Issues ของ QR Code Maker</a></p>
       </article>
     </main>
   );

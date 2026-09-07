@@ -1,7 +1,7 @@
 {
-  "name": "QR Code Generator & QR CODE Maker — สร้าง Qr code ง่ายนิดเดียว",
-  "short_name": "QR lab",
-  "description": "QR Code Generator & QR CODE Maker ระดับโปร — สร้าง Qr code ง่ายนิดเดียว ฟรี ไม่มีวันหมดอายุ",
+  "name": "QR Code Maker — สร้าง QR Code ฟรี ไม่มีวันหมดอายุ",
+  "short_name": "QR Code Maker",
+  "description": "QR Code Maker ระดับโปร — สร้าง QR Code ง่ายนิดเดียว ฟรี ไม่มีวันหมดอายุ",
   "id": "/",
   "start_url": "/?source=android-app",
   "scope": "/",

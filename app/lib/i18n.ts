@@ -2,9 +2,9 @@ import type { Language } from './types';
 
 export const translations = {
   th: {
-    brand: 'QR lab QR CODE generator',
-    tagline: 'QR CODE Maker & QR Code Generator',
-    heroDesc: 'QR CODE Maker และ QR Code Generator ระดับมืออาชีพ สร้าง Qr code ง่ายนิดเดียว คมชัดทั้ง URL, พร้อมเพย์, Wi-Fi, โซเชียล และนามบัตร พร้อมสแกนเนอร์ในตัว เวกเตอร์ SVG ไม่แตก ไม่มีวันหมดอายุ',
+    brand: 'QR Code Maker',
+    tagline: 'QR Code Maker — สร้าง QR Code ฟรี ไม่มีวันหมดอายุ',
+    heroDesc: 'QR Code Maker ระดับมืออาชีพ สร้าง Qr code ง่ายนิดเดียว คมชัดทั้ง URL, พร้อมเพย์, Wi-Fi, โซเชียล และนามบัตร พร้อมสแกนเนอร์ในตัว เวกเตอร์ SVG ไม่แตก ไม่มีวันหมดอายุ',
     ctaCreate: 'สร้าง QR ฟรี',
     ctaScan: 'สแกน QR Code',
     badgeLive: 'อัปเดตทันที',
@@ -196,10 +196,10 @@ export const translations = {
     standDefaultWifiFooter: 'สแกนเพื่อเชื่อมต่ออินเทอร์เน็ตทันที',
     standDefaultMenuHeader: 'SCAN FOR MENU',
     standDefaultMenuFooter: 'สแกนดูเมนูอาหารและโปรโมชั่น',
-    standWatermark: 'สร้างป้ายฟรีที่ QR Lab',
+    standWatermark: 'สร้างป้ายฟรีที่ QR Code Maker (qrcodemaker.me)',
 
     // PWA Install Prompt
-    pwaBannerTitle: 'ติดตั้ง QR Lab ลงหน้าจอมือถือ',
+    pwaBannerTitle: 'ติดตั้ง QR Code Maker ลงหน้าจอมือถือ',
     pwaBannerDesc: 'เปิดสร้าง QR Code ได้สะดวกรวดเร็วตลอดเวลา ไม่ต้องพิมพ์ค้นหาใหม่',
     pwaInstallBtn: '📲 ติดตั้งแอปฟรี',
     pwaDismiss: 'ไว้คราวหน้า',
@@ -207,10 +207,10 @@ export const translations = {
 
     // Comparison Table
     comparisonKicker: 'WHY CHOOSE US',
-    comparisonTitle: 'ทำไมต้องเลือก QR Lab?',
-    comparisonSubtitle: 'เปรียบเทียบข้อดีของ QR Lab กับเว็บไซต์สร้าง QR Code ทั่วไปที่คุณเคยพบ',
+    comparisonTitle: 'ทำไมต้องเลือก QR Code Maker?',
+    comparisonSubtitle: 'เปรียบเทียบข้อดีของ QR Code Maker (qrcodemaker.me) กับเว็บไซต์สร้าง QR Code ทั่วไปที่คุณเคยพบ',
     thFeature: 'คุณสมบัติ',
-    thQrlab: 'QR Lab (เว็บนี้)',
+    thQrlab: 'QR Code Maker (เว็บนี้)',
     thOthers: 'เว็บสร้าง QR ทั่วไป',
     cmpRow1Feature: 'อายุการใช้งาน',
     cmpRow1Qrlab: 'ไม่มีวันหมดอายุ (ถาวร 100%)',
@@ -241,10 +241,10 @@ export const translations = {
 
     // Footer
     privacyPolicy: 'นโยบายความเป็นส่วนตัว',
-    allRightsReserved: 'QR LAB — เปลี่ยนทุกลิงก์ให้พร้อมสแกน',
+    allRightsReserved: 'QR Code Maker — เปลี่ยนทุกลิงก์ให้พร้อมสแกน',
 
     // Support Section
-    supportKicker: 'SUPPORT QR LAB',
+    supportKicker: 'SUPPORT QR CODE MAKER',
     supportTitle: 'สนับสนุนแอปพร้อมปิดโฆษณาถาวร',
     supportDesc: 'เลือกสนับสนุน 49 หรือ 100 บาท ทั้งสองระดับซื้อครั้งเดียวและได้รับสิทธิ์ไม่มีโฆษณาเหมือนกัน',
     supportBtn1: 'สนับสนุน',
@@ -265,9 +265,9 @@ export const translations = {
     supportPrivacyFailed: 'เปิดการตั้งค่าความเป็นส่วนตัวไม่สำเร็จ',
   },
   en: {
-    brand: 'QR lab QR CODE generator',
-    tagline: 'QR Code Generator & QR CODE Maker',
-    heroDesc: 'Professional QR CODE Maker & QR Code Generator. Create crisp, high-resolution QR codes for URLs, PromptPay, Wi-Fi, Social, and Contacts in seconds with built-in scanner & vector SVG export.',
+    brand: 'QR Code Maker',
+    tagline: 'QR Code Maker & Generator — Free Forever',
+    heroDesc: 'Professional QR Code Maker. Create crisp, high-resolution QR codes for URLs, PromptPay, Wi-Fi, Social, and Contacts in seconds with built-in scanner & vector SVG export.',
     ctaCreate: 'Create QR Free',
     ctaScan: 'Scan QR Code',
     badgeLive: 'Instant Live Preview',
@@ -459,10 +459,10 @@ export const translations = {
     standDefaultWifiFooter: 'Scan to connect to internet automatically',
     standDefaultMenuHeader: 'SCAN FOR MENU',
     standDefaultMenuFooter: 'View digital menu & order food',
-    standWatermark: 'Created free with QR Lab',
+    standWatermark: 'Created free with QR Code Maker (qrcodemaker.me)',
 
     // PWA Install Prompt
-    pwaBannerTitle: 'Install QR Lab on Your Phone',
+    pwaBannerTitle: 'Install QR Code Maker on Your Phone',
     pwaBannerDesc: 'Create QR codes anytime with 1 tap from your home screen.',
     pwaInstallBtn: '📲 Install Free App',
     pwaDismiss: 'Maybe Later',
@@ -470,10 +470,10 @@ export const translations = {
 
     // Comparison Table
     comparisonKicker: 'WHY CHOOSE US',
-    comparisonTitle: 'Why Choose QR Lab?',
-    comparisonSubtitle: 'See how QR Lab compares to typical QR code generator tools',
+    comparisonTitle: 'Why Choose QR Code Maker?',
+    comparisonSubtitle: 'See how QR Code Maker (qrcodemaker.me) compares to typical QR code generator tools',
     thFeature: 'Features',
-    thQrlab: 'QR Lab (Free Forever)',
+    thQrlab: 'QR Code Maker (Free Forever)',
     thOthers: 'Other QR Generators',
     cmpRow1Feature: 'Expiration',
     cmpRow1Qrlab: 'Never expires (100% Permanent)',
@@ -504,10 +504,10 @@ export const translations = {
 
     // Footer
     privacyPolicy: 'Privacy Policy',
-    allRightsReserved: 'QR LAB — Every Link, Ready to Scan',
+    allRightsReserved: 'QR Code Maker — Every Link, Ready to Scan',
 
     // Support Section
-    supportKicker: 'SUPPORT QR LAB',
+    supportKicker: 'SUPPORT QR CODE MAKER',
     supportTitle: 'Support the App & Remove Ads Permanently',
     supportDesc: 'Support with ฿49 or ฿100. Both options are one-time purchases and grant lifetime ad-free experience.',
     supportBtn1: 'Support',

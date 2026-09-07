@@ -2,7 +2,7 @@ import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
   appId: 'com.susuoate.qrlab',
-  appName: 'QR LAB',
+  appName: 'QR Code Maker',
   webDir: 'mobile-dist',
   android: {
     backgroundColor: '#07172f',

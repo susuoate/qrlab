@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Home from '../page';
 
 export const metadata: Metadata = {
-  title: 'สร้าง QR Code Wi-Fi ฟรี — สแกนเชื่อมต่ออินเทอร์เน็ตอัตโนมัติ ไม่ต้องพิมพ์รหัส | QR lab',
+  title: 'สร้าง QR Code Wi-Fi ฟรี — สแกนเชื่อมต่ออินเทอร์เน็ตอัตโนมัติ ไม่ต้องพิมพ์รหัส | QR Code Maker',
   description: 'เครื่องมือสร้าง QR Code Wi-Fi ฟรี สำหรับร้านค้า คาเฟ่ โรงแรม และบ้าน สแกนด้วยกล้องมือถือต่อเน็ตอัตโนมัติทันที ไม่ต้องบอกรหัสผ่าน รองรับ WPA/WPA2/WPA3 ไม่มีวันหมดอายุ',
   keywords: [
     'สร้าง qr code wifi',

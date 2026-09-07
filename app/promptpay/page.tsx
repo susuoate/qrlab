@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Home from '../page';
 
 export const metadata: Metadata = {
-  title: 'สร้าง QR Code พร้อมเพย์ ฟรี ไม่มีวันหมดอายุ (PromptPay) — สแกนจ่ายได้ทุกธนาคาร | QR lab',
+  title: 'สร้าง QR Code พร้อมเพย์ ฟรี ไม่มีวันหมดอายุ (PromptPay) — สแกนจ่ายได้ทุกธนาคาร | QR Code Maker',
   description: 'เครื่องมือสร้าง QR Code พร้อมเพย์ (PromptPay QR Generator) ออนไลน์ฟรี ไม่มีวันหมดอายุ ตามมาตรฐาน EMVCo ธปท. รองรับทั้งเบอร์มือถือและเลขบัตรประชาชน สแกนจ่ายเงินได้ทุกแอปธนาคารไทย ปลอดภัย 100%',
   keywords: [
     'สร้าง qr code พร้อมเพย์',

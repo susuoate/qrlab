@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Home from '../page';
 
 export const metadata: Metadata = {
-  title: 'สร้าง QR Code นามบัตรดิจิทัล (vCard) ฟรี — สแกนบันทึกรายชื่อลงมือถือทันที | QR lab',
+  title: 'สร้าง QR Code นามบัตรดิจิทัล (vCard) ฟรี — สแกนบันทึกรายชื่อลงมือถือทันที | QR Code Maker',
   description: 'สร้าง QR Code นามบัตรอิเล็กทรอนิกส์ (Digital Business Card vCard) ฟรี สแกนแล้วกดบันทึกเบอร์โทร อีเมล บริษัท และตำแหน่งลงสมุดโทรศัพท์ได้ทันที คมชัดระดับเวกเตอร์ SVG ไม่มีวันหมดอายุ',
   keywords: [
     'สร้าง qr code นามบัตร',

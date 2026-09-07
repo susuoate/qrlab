@@ -492,7 +492,7 @@ export default function Home({
 
     if (imageFormat === 'svg') {
       const svgString = await generateSvgString(activePayload);
-      const fileName = `qrlab-${qrType}.svg`;
+      const fileName = `qrcodemaker-${qrType}.svg`;
 
       if (isNativeApp) {
         const [{ Directory, Filesystem }, { Share }, { Haptics, ImpactStyle }] = await Promise.all([
@@ -507,7 +507,7 @@ export default function Home({
         });
         await Haptics.impact({ style: ImpactStyle.Light });
         await Share.share({
-          title: 'QR LAB',
+          title: 'QR Code Maker',
           text: activePayload,
           url: savedFile.uri,
           dialogTitle: lang === 'th' ? 'บันทึกหรือแชร์ SVG' : 'Save or Share SVG',
@@ -527,7 +527,7 @@ export default function Home({
       const exportCanvas = document.createElement('canvas');
       await renderQr(activePayload, exportCanvas);
       const isJpeg = imageFormat === 'jpeg';
-      const fileName = `qrlab-${qrType}.${isJpeg ? 'jpg' : 'png'}`;
+      const fileName = `qrcodemaker-${qrType}.${isJpeg ? 'jpg' : 'png'}`;
       const mimeType = isJpeg ? 'image/jpeg' : 'image/png';
 
       if (isNativeApp) {
@@ -544,7 +544,7 @@ export default function Home({
         });
         await Haptics.impact({ style: ImpactStyle.Light });
         await Share.share({
-          title: 'QR LAB',
+          title: 'QR Code Maker',
           text: activePayload,
           url: savedFile.uri,
           dialogTitle: lang === 'th' ? 'บันทึกหรือแชร์ QR Code' : 'Save or Share QR Code',
@@ -763,7 +763,7 @@ export default function Home({
       ctx.fillText(`${t.standWatermark} • qrcodemaker.me`, 600, 1460);
       ctx.restore();
 
-      const fileName = `qrlab-stand-${standTemplate}.png`;
+      const fileName = `qrcodemaker-stand-${standTemplate}.png`;
       if (isNativeApp) {
         const dataUrl = posterCanvas.toDataURL('image/png', 0.95);
         const [{ Directory, Filesystem }, { Share }, { Haptics, ImpactStyle }] = await Promise.all([
@@ -859,7 +859,7 @@ export default function Home({
 
       <header className="site-header">
         <div className="header-inner">
-          <a className="brand" href="#top" aria-label="QR lab QR CODE generator">
+          <a className="brand" href="#top" aria-label="QR Code Maker">
             <span className="brand-mark" aria-hidden="true">
               <i />
               <i />
@@ -977,7 +977,7 @@ export default function Home({
             <div className="generator-head">
               <div>
                 <span className="section-kicker">QR CODE MAKER &amp; GENERATOR</span>
-                <h2>QR lab Studio</h2>
+                <h2>QR Code Maker Studio</h2>
               </div>
               <span className="live-badge">
                 <i /> {t.badgeLive}
@@ -2093,7 +2093,7 @@ export default function Home({
               onClick={() => {
                 if (typeof window !== 'undefined') {
                   const shareUrl = window.location.href;
-                  const text = encodeURIComponent('QR Lab — ทำ QR Code ฟรี สร้างง่ายนิดเดียว ไม่มีวันหมดอายุ: ' + shareUrl);
+                  const text = encodeURIComponent('QR Code Maker — ทำ QR Code ฟรี สร้างง่ายนิดเดียว ไม่มีวันหมดอายุ: ' + shareUrl);
                   window.open(`https://line.me/R/msg/text/?${text}`, '_blank');
                 }
               }}
@@ -2202,8 +2202,8 @@ export default function Home({
                 </span>
                 <h3 className="modal-title">
                   {lang === 'th'
-                    ? 'ติดตั้ง QR Lab บน iPhone / iPad'
-                    : 'Install QR Lab on iPhone / iPad'}
+                    ? 'ติดตั้ง QR Code Maker บน iPhone / iPad'
+                    : 'Install QR Code Maker on iPhone / iPad'}
                 </h3>
               </div>
               <button

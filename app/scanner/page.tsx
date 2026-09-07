@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Home from '../page';
 
 export const metadata: Metadata = {
-  title: 'สแกน QR Code ออนไลน์ ฟรี — อ่านข้อมูลผ่านกล้องและอัปโหลดรูปภาพ ไม่ต้องลงแอป | QR lab',
+  title: 'สแกน QR Code ออนไลน์ ฟรี — อ่านข้อมูลผ่านกล้องและอัปโหลดรูปภาพ ไม่ต้องลงแอป | QR Code Maker',
   description: 'เครื่องมือสแกน QR Code ออนไลน์ฟรีในเบราว์เซอร์ ใช้งานได้ทันทีทั้งบนคอมพิวเตอร์และมือถือ รองรับการเปิดกล้องสดและอัปโหลดไฟล์รูปภาพ ถอดรหัส URL, พร้อมเพย์, Wi-Fi รวดเร็ว ปลอดภัย',
   keywords: [
     'สแกน qr code',

@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { useEffect } from 'react';
 
@@ -51,7 +51,7 @@ export default function SidebarAd({
                 <div className="ad-badge-orbit">
                   <span>✦</span>
                 </div>
-                <strong>QR LAB PRO</strong>
+                <strong>QR CODE MAKER PRO</strong>
                 <p>สร้าง QR พร้อมเพย์ &amp; Wi-Fi ไม่จำกัด</p>
                 <div className="ad-perks">
                   <span>✓ คมชัดเวกเตอร์ SVG</span>
