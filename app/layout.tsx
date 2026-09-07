@@ -1,13 +1,14 @@
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
 
-const productionUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
-  ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-  : 'https://qrlab-th.oateoate1.chatgpt.site';
+const productionUrl = process.env.NEXT_PUBLIC_SITE_URL
+  || (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : null)
+  || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : null)
+  || 'https://qrlab-green.vercel.app';
 
 export const metadata: Metadata = {
   metadataBase: new URL(productionUrl),
-  applicationName: 'QR lab QR CODE generator',
+  applicationName: 'QR lab',
   title: 'ทำ QR Code ฟรี — สร้าง QR Code ง่ายนิดเดียว ไม่มีวันหมดอายุ | QR lab',
   description: 'ทำ QR Code และสร้าง QR Code ฟรี ง่ายนิดเดียว ไม่มีวันหมดอายุ ไม่มีลายน้ำ รองรับพร้อมเพย์ (PromptPay), Wi-Fi, นามบัตรดิจิทัล vCard, ลิงก์ และเบอร์โทร คมชัดระดับเวกเตอร์ SVG ไม่แตก ปลอดภัย 100%',
   keywords: [
@@ -97,7 +98,7 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'th_TH',
     url: '/',
-    siteName: 'QR lab QR CODE generator',
+    siteName: 'QR lab',
     title: 'ทำ QR Code ฟรี — สร้าง QR Code ง่ายนิดเดียว ไม่มีวันหมดอายุ | QR lab',
     description: 'ทำ QR Code และสร้าง QR Code ฟรี ระดับมืออาชีพ แปลงทุกลิงก์ พร้อมเพย์ และ Wi-Fi ให้เป็น QR Code ความละเอียดสูง คมชัด ปรับแต่งสีและโลโก้ได้ทันที 100% ฟรี',
     images: [{
@@ -140,8 +141,9 @@ const jsonLd = {
     {
       '@type': 'WebApplication',
       '@id': `${productionUrl}/#webapp`,
-      name: 'QR lab QR CODE generator',
+      name: 'QR lab',
       alternateName: [
+        'QR lab QR CODE generator',
         'ทำ QR Code',
         'ทำ QR Code ฟรี',
         'วิธีทำ QR Code',
@@ -166,8 +168,9 @@ const jsonLd = {
       '@type': 'WebSite',
       '@id': `${productionUrl}/#website`,
       url: productionUrl,
-      name: 'QR lab QR CODE generator',
+      name: 'QR lab',
       alternateName: [
+        'QR lab QR CODE generator',
         'ทำ QR Code',
         'ทำ QR Code ฟรี',
         'วิธีทำ QR Code',
