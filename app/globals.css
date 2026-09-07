@@ -1349,7 +1349,356 @@ footer { display: flex; align-items: center; justify-content: space-between; min
     font-size: 10px !important;
     margin-top: 4px !important;
   }
+
+  /* Sticker Sheet Print Override */
+  body.printing-stickers .hero-studio-layout,
+  body.printing-stickers .preview-panel,
+  body.printing-stickers .generator-shell {
+    display: none !important;
+  }
+
+  body.printing-stickers .modal-backdrop {
+    display: block !important;
+    position: static !important;
+    background: transparent !important;
+    padding: 0 !important;
+    backdrop-filter: none !important;
+  }
+
+  body.printing-stickers .sticker-modal-card {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-shadow: none !important;
+    border: none !important;
+    background: transparent !important;
+    padding: 0 !important;
+    overflow: visible !important;
+  }
+
+  body.printing-stickers .sticker-controls-bar,
+  body.printing-stickers .sticker-action-buttons,
+  body.printing-stickers .modal-header {
+    display: none !important;
+  }
+
+  body.printing-stickers .sticker-preview-wrapper {
+    background: transparent !important;
+    padding: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
+  body.printing-stickers .a4-sticker-sheet {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-height: auto !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    page-break-inside: avoid !important;
+  }
 }
 
+/* ==========================================================================
+   A4 Sticker Sheet Modal & Print Styles
+   ========================================================================== */
+.sticker-modal-card {
+  width: min(100%, 780px) !important;
+  max-height: 92vh !important;
+}
 
+.sticker-controls-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 14px 0 12px;
+  flex-wrap: wrap;
+}
 
+.sticker-select-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink-deep);
+}
+
+.sticker-count-tabs {
+  display: flex;
+  gap: 6px;
+  background: #f1f5f9;
+  padding: 4px;
+  border-radius: 12px;
+}
+
+.sticker-count-btn {
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  background: transparent;
+  color: #475569;
+  transition: all 0.15s ease;
+}
+
+.sticker-count-btn.active {
+  background: white;
+  color: #0f172a;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.sticker-action-buttons {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 14px;
+}
+
+.sticker-print-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.15);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.sticker-print-action-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.25);
+}
+
+.sticker-preview-wrapper {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 24px;
+  max-height: 520px;
+  overflow-y: auto;
+  display: flex;
+  justify-content: center;
+}
+
+.a4-sticker-sheet {
+  width: 100%;
+  max-width: 520px;
+  background: #ffffff;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+  padding: 20px;
+  display: grid;
+  box-sizing: border-box;
+}
+
+.a4-sticker-sheet.count-6 {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.a4-sticker-sheet.count-12 {
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.a4-sticker-sheet.count-24 {
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.sticker-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1;
+}
+
+.sticker-cut-border {
+  width: 100%;
+  height: 100%;
+  border: 1.5px dashed #cbd5e1;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  box-sizing: border-box;
+  position: relative;
+  background: #ffffff;
+}
+
+.sticker-qr-img {
+  width: 78%;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: contain;
+}
+
+.sticker-qr-loading {
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.sticker-watermark {
+  font-size: 8px;
+  font-weight: 700;
+  color: #94a3b8;
+  margin-top: 2px;
+  letter-spacing: 0.02em;
+}
+
+/* ==========================================================================
+   Embed Widget Modal & Generator Buttons
+   ========================================================================== */
+.embed-modal-card {
+  width: min(100%, 580px) !important;
+}
+
+.embed-code-box {
+  background: #0f172a;
+  border: 1px solid #1e293b;
+  border-radius: 12px;
+  padding: 16px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 12px;
+  color: #38bdf8;
+  line-height: 1.6;
+  word-break: break-all;
+  white-space: pre-wrap;
+  margin: 16px 0;
+  user-select: all;
+}
+
+.embed-copy-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  background: #059669;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(5, 150, 105, 0.2);
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.embed-copy-action-btn:hover {
+  background: #047857;
+  transform: translateY(-1px);
+}
+
+/* Preview Panel Extended Action Buttons */
+.sticker-open-button,
+.embed-open-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 42px;
+  padding: 0 12px;
+  border: 1.5px solid rgba(18, 59, 58, 0.16);
+  border-radius: 12px;
+  background: #f8fafc;
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.sticker-open-button:hover:not(:disabled),
+.embed-open-button:hover:not(:disabled) {
+  border-color: var(--ink);
+  background: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.sticker-open-button:disabled,
+.embed-open-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.share-btn.native-share {
+  background: #0284c7;
+  color: #ffffff;
+}
+
+.share-btn.native-share:hover {
+  background: #0369a1;
+}
+
+/* ==========================================================================
+   Pillar 4: SEO Topic Cluster & Internal Links (Footer)
+   ========================================================================== */
+.seo-topic-cluster {
+  margin-top: 48px;
+  padding-top: 36px;
+  border-top: 1px solid var(--line);
+}
+
+.topic-cluster-header {
+  margin-bottom: 24px;
+}
+
+.topic-cluster-header h3 {
+  font-size: 16px;
+  font-weight: 850;
+  color: var(--ink-deep);
+  margin: 0 0 6px;
+}
+
+.topic-cluster-header p {
+  font-size: 13px;
+  color: #64748b;
+  margin: 0;
+}
+
+.topic-cluster-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 28px;
+}
+
+.topic-cluster-col h4 {
+  font-size: 13.5px;
+  font-weight: 800;
+  color: var(--ink);
+  margin: 0 0 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.topic-cluster-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.topic-cluster-link {
+  font-size: 12.5px;
+  color: #526662;
+  text-decoration: none;
+  transition: color 0.15s ease, transform 0.15s ease;
+  display: inline-block;
+}
+
+.topic-cluster-link:hover {
+  color: #0284c7;
+  text-decoration: underline;
+  transform: translateX(2px);
+}

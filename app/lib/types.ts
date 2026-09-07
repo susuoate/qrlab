@@ -1,4 +1,4 @@
-export type QrType = 'url' | 'promptpay' | 'wifi' | 'social' | 'tel' | 'vcard' | 'text';
+export type QrType = 'url' | 'promptpay' | 'wifi' | 'social' | 'tel' | 'vcard' | 'text' | 'maps' | 'pdf';
 
 export type ImageFormat = 'png' | 'jpeg' | 'svg';
 

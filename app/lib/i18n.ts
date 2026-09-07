@@ -24,9 +24,21 @@ export const translations = {
     tabPromptpay: 'พร้อมเพย์',
     tabWifi: 'Wi-Fi',
     tabSocial: 'โซเชียล',
+    tabMaps: 'แผนที่ (Maps)',
+    tabPdf: 'ไฟล์ PDF / Drive',
     tabTel: 'เบอร์โทร',
     tabVCard: 'นามบัตร',
     tabText: 'ข้อความ',
+
+    // Maps Form
+    mapsLabel: 'ลิงก์ Google Maps หรือ พิกัด GPS',
+    mapsPlaceholder: 'https://maps.app.goo.gl/... หรือ 13.7563, 100.5018',
+    mapsHelp: 'สแกนแล้วเปิดแอป Google Maps นำทางทันที เหมาะสำหรับร้านค้าและงานอีเวนต์',
+
+    // PDF Form
+    pdfLabel: 'ลิงก์ไฟล์ PDF หรือ Google Drive',
+    pdfPlaceholder: 'https://drive.google.com/file/d/... หรือ yourwebsite.com/menu.pdf',
+    pdfHelp: 'ระบบจะแปลงลิงก์ Google Drive เป็น Direct View ให้สแกนเปิดดูไฟล์ PDF ได้ทันที',
 
     // URL Form
     urlLabel: 'ลิงก์เว็บไซต์',
@@ -231,6 +243,22 @@ export const translations = {
     cmpRow6Qrlab: 'ฟรีตลอดชีพ ไม่มีค่าธรรมเนียมแอบแฝง',
     cmpRow6Others: 'มีค่าบริการรายเดือน',
 
+    // Sticker Sheet & Embed
+    stickerBtn: '🏷️ พิมพ์สติกเกอร์ A4',
+    stickerModalTitle: 'พิมพ์แผ่นสติกเกอร์ A4 หลายดวง',
+    stickerModalSub: 'จัดเลย์เอาต์พิมพ์สติกเกอร์ QR Code สำเร็จรูปในกระดาษ A4 แผ่นเดียว พร้อมเส้นประสำหรับตัด',
+    stickerCountLabel: 'จำนวนดวงต่อหน้า A4:',
+    stickerCount6: '6 ดวง (ขนาดใหญ่ 7.5 ซม. — ติดหน้าร้าน / เคาน์เตอร์)',
+    stickerCount12: '12 ดวง (ขนาดยอดนิยม 5.5 ซม. — ติดโต๊ะ / กล่องพัสดุ)',
+    stickerCount24: '24 ดวง (ขนาดกะทัดรัด 3.8 ซม. — ติดแก้วกาแฟ / ซองสินค้า)',
+    stickerPrintNow: '🖨️ สั่งพิมพ์ A4 ทันที',
+    stickerClose: 'ปิดหน้าต่าง',
+    embedBtn: '📋 ติดบนเว็บของคุณ',
+    embedTitle: 'นำเครื่องมือสร้าง QR ไปติดบนเว็บของคุณฟรี',
+    embedDesc: 'คัดลอกโค้ด HTML iframe ด้านล่างนี้ไปวางบนบล็อก หรือเว็บไซต์ของคุณได้ทันที',
+    embedCopied: 'คัดลอกโค้ดเรียบร้อย!',
+    embedCopyBtn: 'คัดลอกโค้ด Embed',
+
     // Share & Bookmark
     shareTitle: 'ชอบเครื่องมือนี้? แชร์ต่อให้เพื่อน',
     shareLine: 'แชร์ผ่าน LINE',
@@ -287,9 +315,21 @@ export const translations = {
     tabPromptpay: 'PromptPay',
     tabWifi: 'Wi-Fi',
     tabSocial: 'Social',
+    tabMaps: 'Google Maps',
+    tabPdf: 'PDF / Cloud Doc',
     tabTel: 'Phone Call',
     tabVCard: 'Contact (vCard)',
     tabText: 'Plain Text',
+
+    // Maps Form
+    mapsLabel: 'Google Maps Link or GPS Coordinates',
+    mapsPlaceholder: 'https://maps.app.goo.gl/... or 13.7563, 100.5018',
+    mapsHelp: 'Scans directly into Google Maps for instant turn-by-turn navigation',
+
+    // PDF Form
+    pdfLabel: 'PDF Link or Google Drive Document',
+    pdfPlaceholder: 'https://drive.google.com/file/d/... or yoursite.com/menu.pdf',
+    pdfHelp: 'Automatically optimizes Google Drive links for instant direct view',
 
     // URL Form
     urlLabel: 'Website Link',
@@ -493,6 +533,22 @@ export const translations = {
     cmpRow6Feature: 'Cost',
     cmpRow6Qrlab: '100% Free Forever',
     cmpRow6Others: 'Hidden subscription fees',
+
+    // Sticker Sheet & Embed
+    stickerBtn: '🏷️ Print A4 Stickers',
+    stickerModalTitle: 'Print Multi-Sticker A4 Sheet',
+    stickerModalSub: 'Pre-formatted multi-sticker grid ready for direct A4 printing with cutting guides',
+    stickerCountLabel: 'Stickers per A4 Sheet:',
+    stickerCount6: '6 Stickers (Large 7.5 cm — Storefront / Counter)',
+    stickerCount12: '12 Stickers (Standard 5.5 cm — Table / Parcel)',
+    stickerCount24: '24 Stickers (Compact 3.8 cm — Cup / Product packaging)',
+    stickerPrintNow: '🖨️ Print A4 Sheet Now',
+    stickerClose: 'Close',
+    embedBtn: '📋 Embed on Your Site',
+    embedTitle: 'Embed Free QR Code Generator on Your Website',
+    embedDesc: 'Copy the lightweight HTML iframe snippet below to embed this tool on your blog or site.',
+    embedCopied: 'Embed Code Copied!',
+    embedCopyBtn: 'Copy Embed Code',
 
     // Share & Bookmark
     shareTitle: 'Find this useful? Share with friends',

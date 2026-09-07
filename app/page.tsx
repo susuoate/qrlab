@@ -6,6 +6,7 @@ import QRCode from 'qrcode';
 import HistoryModal from './components/HistoryModal';
 import LogoSelector from './components/LogoSelector';
 import QrScannerModal from './components/QrScannerModal';
+import A4StickerModal from './components/A4StickerModal';
 import { clearAllHistory, deleteHistoryItem, getHistory, saveHistoryItem } from './lib/history';
 import { translations } from './lib/i18n';
 import { PRESET_LOGOS } from './lib/presetLogos';
@@ -91,6 +92,8 @@ export default function Home({
     organization: '',
   });
   const [textContent, setTextContent] = useState('');
+  const [mapsInput, setMapsInput] = useState('');
+  const [pdfInput, setPdfInput] = useState('');
 
   // Styling & Export options
   const [darkColor, setDarkColor] = useState(colorChoices[0]);
@@ -110,6 +113,9 @@ export default function Home({
   // Modals
   const [isScannerOpen, setIsScannerOpen] = useState(initialScannerOpen);
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
+  const [isStickerModalOpen, setIsStickerModalOpen] = useState(false);
+  const [isEmbedModalOpen, setIsEmbedModalOpen] = useState(false);
+  const [embedCopied, setEmbedCopied] = useState(false);
   const [historyItems, setHistoryItems] = useState<HistoryItem[]>([]);
 
   // Stand template & custom texts
@@ -336,6 +342,34 @@ export default function Home({
           payload = textContent.trim();
           break;
         }
+        case 'maps': {
+          const trimmed = mapsInput.trim();
+          if (!trimmed) {
+            setError(lang === 'th' ? 'กรุณาใส่ลิงก์ Google Maps หรือพิกัด' : 'Please enter Google Maps link or coordinates');
+            return;
+          }
+          const coordMatch = trimmed.match(/^-?\d+(\.\d+)?\s*,\s*-?\d+(\.\d+)?$/);
+          if (coordMatch) {
+            payload = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(trimmed)}`;
+          } else {
+            payload = normalizeUrl(trimmed);
+          }
+          break;
+        }
+        case 'pdf': {
+          const trimmed = pdfInput.trim();
+          if (!trimmed) {
+            setError(lang === 'th' ? 'กรุณาใส่ลิงก์ไฟล์ PDF หรือ Google Drive' : 'Please enter PDF or Google Drive link');
+            return;
+          }
+          const driveMatch = trimmed.match(/\/file\/d\/([a-zA-Z0-9_-]+)/) || trimmed.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+          if (driveMatch && driveMatch[1]) {
+            payload = `https://drive.google.com/file/d/${driveMatch[1]}/preview`;
+          } else {
+            payload = normalizeUrl(trimmed);
+          }
+          break;
+        }
       }
 
       setActivePayload(payload);
@@ -346,7 +380,7 @@ export default function Home({
         setError(lang === 'th' ? 'ข้อมูลไม่ถูกต้อง' : 'Invalid input');
       }
     }
-  }, [qrType, url, promptPayForm, wifiForm, socialForm, telNumber, vCardForm, textContent, lang]);
+  }, [qrType, url, promptPayForm, wifiForm, socialForm, telNumber, vCardForm, textContent, mapsInput, pdfInput, lang]);
 
   // Render QR Code + Center Logo to Canvas
   const renderQr = useCallback(
@@ -478,6 +512,10 @@ export default function Home({
         ? `Tel: ${telNumber}`
         : qrType === 'vcard'
         ? `Contact: ${vCardForm.firstName} ${vCardForm.lastName}`
+        : qrType === 'maps'
+        ? `Maps: ${mapsInput.slice(0, 30)}`
+        : qrType === 'pdf'
+        ? `PDF: ${pdfInput.slice(0, 30)}`
         : `Text: ${textContent.slice(0, 20)}`;
 
     const updatedHistory = saveHistoryItem({
@@ -818,12 +856,14 @@ export default function Home({
     if (item.type === 'url') setUrl(item.payload);
     else if (item.type === 'text') setTextContent(item.payload);
     else if (item.type === 'tel') setTelNumber(item.payload.replace('tel:', ''));
+    else if (item.type === 'maps') setMapsInput(item.payload);
+    else if (item.type === 'pdf') setPdfInput(item.payload);
     else setActivePayload(item.payload);
 
     setIsHistoryOpen(false);
   };
 
-  const isLinkType = qrType === 'url' || qrType === 'social' || /^https?:\/\//i.test(activePayload);
+  const isLinkType = qrType === 'url' || qrType === 'social' || qrType === 'maps' || qrType === 'pdf' || /^https?:\/\//i.test(activePayload);
 
   return (
     <main className={mobileApp ? 'native-app' : undefined}>
@@ -1012,6 +1052,24 @@ export default function Home({
                 onClick={() => setQrType('wifi')}
               >
                 📶 {t.tabWifi}
+              </button>
+              <button
+                type="button"
+                role="tab"
+                aria-selected={qrType === 'maps'}
+                className={`type-tab ${qrType === 'maps' ? 'active' : ''}`}
+                onClick={() => setQrType('maps')}
+              >
+                📍 {t.tabMaps}
+              </button>
+              <button
+                type="button"
+                role="tab"
+                aria-selected={qrType === 'pdf'}
+                className={`type-tab ${qrType === 'pdf' ? 'active' : ''}`}
+                onClick={() => setQrType('pdf')}
+              >
+                📄 {t.tabPdf}
               </button>
               <button
                 type="button"
@@ -1374,6 +1432,46 @@ export default function Home({
                   </div>
                 )}
 
+                {/* 8. GOOGLE MAPS FORM */}
+                {qrType === 'maps' && (
+                  <div className="custom-form-group">
+                    <label className="field-label" htmlFor="maps-input">
+                      {t.mapsLabel}
+                    </label>
+                    <div className="url-field" onClick={handleFieldClick}>
+                      <input
+                        id="maps-input"
+                        type="text"
+                        value={mapsInput}
+                        onChange={(e) => setMapsInput(e.target.value)}
+                        placeholder={t.mapsPlaceholder}
+                      />
+                    </div>
+                    <span className="field-helper">{t.mapsHelp}</span>
+                    {error && <p className="field-error">{error}</p>}
+                  </div>
+                )}
+
+                {/* 9. PDF DOCUMENT FORM */}
+                {qrType === 'pdf' && (
+                  <div className="custom-form-group">
+                    <label className="field-label" htmlFor="pdf-input">
+                      {t.pdfLabel}
+                    </label>
+                    <div className="url-field" onClick={handleFieldClick}>
+                      <input
+                        id="pdf-input"
+                        type="url"
+                        value={pdfInput}
+                        onChange={(e) => setPdfInput(e.target.value)}
+                        placeholder={t.pdfPlaceholder}
+                      />
+                    </div>
+                    <span className="field-helper">{t.pdfHelp}</span>
+                    {error && <p className="field-error">{error}</p>}
+                  </div>
+                )}
+
                 <div className="divider" />
 
                 {/* STYLING & FORMAT CONTROLS */}
@@ -1666,6 +1764,29 @@ export default function Home({
                       disabled={Boolean(error)}
                     >
                       {copied ? t.previewActionCopied : t.previewActionCopy}
+                    </button>
+                  </div>
+
+                  <div className="preview-sub-actions">
+                    <button
+                      className="sticker-open-button"
+                      type="button"
+                      onClick={() => setIsStickerModalOpen(true)}
+                      disabled={Boolean(error)}
+                      title={t.stickerBtn}
+                    >
+                      <span aria-hidden="true">🏷️</span>
+                      <span>{t.stickerBtn}</span>
+                    </button>
+
+                    <button
+                      className="embed-open-button"
+                      type="button"
+                      onClick={() => setIsEmbedModalOpen(true)}
+                      title={t.embedBtn}
+                    >
+                      <span aria-hidden="true">&lt;/&gt;</span>
+                      <span>{t.embedBtn}</span>
                     </button>
                   </div>
                 </div>
@@ -2129,6 +2250,25 @@ export default function Home({
             >
               🔗 {shareCopied ? t.shareCopied : t.shareCopy}
             </button>
+            {typeof navigator !== 'undefined' && typeof navigator.share === 'function' && (
+              <button
+                type="button"
+                className="share-btn native-share"
+                onClick={async () => {
+                  try {
+                    await navigator.share({
+                      title: 'QR Code Maker — ทำ QR Code ฟรี',
+                      text: 'สร้าง QR Code ฟรี ง่ายนิดเดียว ไม่มีวันหมดอายุ ไม่มีลายน้ำ',
+                      url: window.location.href,
+                    });
+                  } catch {
+                    // ignore user dismissal
+                  }
+                }}
+              >
+                📲 {lang === 'th' ? 'แชร์ทันที' : 'Share'}
+              </button>
+            )}
           </div>
         </div>
       </section>
@@ -2145,6 +2285,47 @@ export default function Home({
           </a>
           <p>{t.allRightsReserved}</p>
         </div>
+
+        {/* Pillar 4: SEO Topic Cluster & Directory */}
+        <div className="seo-topic-cluster">
+          <div className="topic-cluster-header">
+            <h3>{lang === 'th' ? 'สารบัญบริการ QR Code ทั้งหมด' : 'All QR Code Services & Directory'}</h3>
+            <p>{lang === 'th' ? 'เครื่องมือสร้าง QR Code คุณภาพสูง ฟรี ไม่มีวันหมดอายุ ใช้งานได้ทันที' : 'Free, permanent, high-resolution QR Code generator tools for personal and business use.'}</p>
+          </div>
+          <div className="topic-cluster-grid">
+            <div className="topic-cluster-col">
+              <h4>💳 {lang === 'th' ? 'หมวดหมู่ยอดนิยม' : 'Popular Categories'}</h4>
+              <ul className="topic-cluster-list">
+                <li><Link href="/promptpay" className="topic-cluster-link">{lang === 'th' ? 'ทำ QR Code พร้อมเพย์ (PromptPay)' : 'PromptPay QR Code Generator'}</Link></li>
+                <li><Link href="/wifi" className="topic-cluster-link">{lang === 'th' ? 'ทำ QR Code Wi-Fi เชื่อมต่ออัตโนมัติ' : 'Wi-Fi Auto Connect QR Code'}</Link></li>
+                <li><Link href="/vcard" className="topic-cluster-link">{lang === 'th' ? 'ทำ QR Code นามบัตรดิจิทัล vCard' : 'Digital Business Card vCard'}</Link></li>
+                <li><Link href="/google-maps" className="topic-cluster-link">{lang === 'th' ? 'ทำ QR Code ปักหมุด Google Maps' : 'Google Maps Location QR Code'}</Link></li>
+                <li><Link href="/pdf" className="topic-cluster-link">{lang === 'th' ? 'ทำ QR Code เอกสาร PDF / Google Drive' : 'PDF Document & Drive QR Code'}</Link></li>
+                <li><Link href="/line" className="topic-cluster-link">{lang === 'th' ? 'ทำ QR Code LINE Official / แอดเพื่อน' : 'LINE QR Code Generator'}</Link></li>
+              </ul>
+            </div>
+            <div className="topic-cluster-col">
+              <h4>🛠️ {lang === 'th' ? 'ฟังก์ชัน & เครื่องมือฟรี' : 'Free Tools & Solutions'}</h4>
+              <ul className="topic-cluster-list">
+                <li><Link href="/link" className="topic-cluster-link">{lang === 'th' ? 'แปลงลิงก์ URL เป็น QR Code คมชัด' : 'URL to QR Code Converter'}</Link></li>
+                <li><Link href="/scanner" className="topic-cluster-link">{lang === 'th' ? 'เครื่องมือสแกน QR Code ออนไลน์' : 'Online QR Code Scanner'}</Link></li>
+                <li><Link href="/menu" className="topic-cluster-link">{lang === 'th' ? 'ทำ QR Code เมนูอาหารร้านค้า' : 'Restaurant Digital Menu QR'}</Link></li>
+                <li><Link href="/wedding" className="topic-cluster-link">{lang === 'th' ? 'ทำ QR Code การ์ดแต่งงาน / งานเลี้ยง' : 'Wedding Invitation QR Code'}</Link></li>
+                <li><Link href="/google-form" className="topic-cluster-link">{lang === 'th' ? 'ทำ QR Code แบบสอบถาม Google Form' : 'Google Forms QR Code'}</Link></li>
+              </ul>
+            </div>
+            <div className="topic-cluster-col">
+              <h4>📖 {lang === 'th' ? 'คู่มือ & มาตรฐานความปลอดภัย' : 'Guides & Standards'}</h4>
+              <ul className="topic-cluster-list">
+                <li><Link href="/permanent" className="topic-cluster-link">{lang === 'th' ? 'ทำ QR Code ไม่มีวันหมดอายุ (Static)' : 'Permanent QR Code (No Expiry)'}</Link></li>
+                <li><Link href="/no-watermark" className="topic-cluster-link">{lang === 'th' ? 'สร้าง QR Code ฟรี ไม่มีลายน้ำ' : 'Free QR Code No Watermark'}</Link></li>
+                <li><Link href="/how-to" className="topic-cluster-link">{lang === 'th' ? 'วิธีสร้าง QR Code ง่ายนิดเดียว ใน 3 ขั้นตอน' : 'How to Create QR Code in 3 Steps'}</Link></li>
+                <li><Link href="/privacy" className="topic-cluster-link">{lang === 'th' ? 'นโยบายความเป็นส่วนตัว (Privacy Policy)' : 'Privacy Policy & On-device Security'}</Link></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
         <div className="footer-actions">
           <a
             href={
@@ -2183,6 +2364,68 @@ export default function Home({
         }}
         lang={lang}
       />
+
+      <A4StickerModal
+        isOpen={isStickerModalOpen}
+        onClose={() => setIsStickerModalOpen(false)}
+        payload={activePayload}
+        darkColor={darkColor}
+        lightColor={lightColor}
+        lang={lang}
+      />
+
+      {isEmbedModalOpen && (
+        <div
+          className="modal-backdrop"
+          onClick={() => setIsEmbedModalOpen(false)}
+          role="dialog"
+          aria-modal="true"
+        >
+          <div
+            className="modal-card embed-modal-card"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="modal-header">
+              <div>
+                <h3>{t.embedTitle}</h3>
+                <p className="modal-subtitle">{t.embedDesc}</p>
+              </div>
+              <button
+                type="button"
+                className="modal-close-btn"
+                onClick={() => setIsEmbedModalOpen(false)}
+                aria-label="Close"
+              >
+                ✕
+              </button>
+            </div>
+
+            <pre className="embed-code-box">
+              {`<iframe src="https://qrcodemaker.me" width="100%" height="750" style="border:1px solid #e2e8f0;border-radius:16px;box-shadow:0 8px 30px rgba(0,0,0,0.08);" title="QR Code Maker"></iframe>`}
+            </pre>
+
+            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px' }}>
+              <button
+                type="button"
+                className="embed-copy-action-btn"
+                onClick={async () => {
+                  try {
+                    await navigator.clipboard.writeText(
+                      '<iframe src="https://qrcodemaker.me" width="100%" height="750" style="border:1px solid #e2e8f0;border-radius:16px;box-shadow:0 8px 30px rgba(0,0,0,0.08);" title="QR Code Maker"></iframe>'
+                    );
+                    setEmbedCopied(true);
+                    setTimeout(() => setEmbedCopied(false), 2500);
+                  } catch {
+                    // Ignore
+                  }
+                }}
+              >
+                📋 {embedCopied ? t.embedCopied : t.embedCopyBtn}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {showIosModal && (
         <div
