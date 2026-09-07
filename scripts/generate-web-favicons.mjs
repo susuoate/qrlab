@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
 
 const projectDirectory = dirname(dirname(fileURLToPath(import.meta.url)));
-const iconSvg = join(projectDirectory, 'public', 'icons', 'app-icon.svg');
+const iconMaster = join(projectDirectory, 'public', 'icons', 'master-app-icon.png');
 
 function createIcoFromPngs(pngBuffers) {
   const count = pngBuffers.length;
@@ -33,22 +33,23 @@ function createIcoFromPngs(pngBuffers) {
 }
 
 async function run() {
-  console.log('Generating Google Search compliant favicons and app icons...');
+  console.log('Generating Google Search compliant favicons and app icons from master-app-icon.png...');
 
   // 1. Google 48px multiple squares: 48x48, 96x96, 192x192, 512x512
-  const b16 = await sharp(iconSvg).resize(16, 16).png().toBuffer();
-  const b32 = await sharp(iconSvg).resize(32, 32).png().toBuffer();
-  const b48 = await sharp(iconSvg).resize(48, 48).png().toBuffer();
-  const b96 = await sharp(iconSvg).resize(96, 96).png().toBuffer();
-  const b180 = await sharp(iconSvg).resize(180, 180).png().toBuffer();
-  const b192 = await sharp(iconSvg).resize(192, 192).png().toBuffer();
-  const b512 = await sharp(iconSvg).resize(512, 512).png().toBuffer();
+  const b16 = await sharp(iconMaster).resize(16, 16).ensureAlpha().png().toBuffer();
+  const b32 = await sharp(iconMaster).resize(32, 32).ensureAlpha().png().toBuffer();
+  const b48 = await sharp(iconMaster).resize(48, 48).ensureAlpha().png().toBuffer();
+  const b96 = await sharp(iconMaster).resize(96, 96).ensureAlpha().png().toBuffer();
+  const b180 = await sharp(iconMaster).resize(180, 180).ensureAlpha().png().toBuffer();
+  const b192 = await sharp(iconMaster).resize(192, 192).ensureAlpha().png().toBuffer();
+  const b512 = await sharp(iconMaster).resize(512, 512).ensureAlpha().png().toBuffer();
 
   // Save standalone PNGs in public/icons/ and public/
   await writeFile(join(projectDirectory, 'public', 'icons', 'icon-48.png'), b48);
   await writeFile(join(projectDirectory, 'public', 'icons', 'icon-96.png'), b96);
   await writeFile(join(projectDirectory, 'public', 'icons', 'icon-192.png'), b192);
   await writeFile(join(projectDirectory, 'public', 'icons', 'icon-512.png'), b512);
+  await writeFile(join(projectDirectory, 'public', 'icons', 'icon-maskable-512.png'), b512);
   await writeFile(join(projectDirectory, 'public', 'apple-touch-icon.png'), b180);
 
   // 2. Build multi-resolution .ico (16, 32, 48)
@@ -65,7 +66,14 @@ async function run() {
   await writeFile(join(projectDirectory, 'app', 'icon.png'), b512);
   await writeFile(join(projectDirectory, 'app', 'apple-icon.png'), b180);
 
-  console.log('Successfully generated all Google Search favicons, .ico, and Next.js app icons!');
+  // 4. Update public/favicon.svg to embed the master icon as high-res vector wrapper
+  const base64Png = b512.toString('base64');
+  const svgContent = `<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <image width="512" height="512" xlink:href="data:image/png;base64,${base64Png}"/>
+</svg>\n`;
+  await writeFile(join(projectDirectory, 'public', 'favicon.svg'), svgContent, 'utf-8');
+
+  console.log('Successfully generated all Google Search favicons, .ico, .svg, and Next.js app icons!');
 }
 
 run().catch((err) => {
