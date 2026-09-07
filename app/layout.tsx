@@ -2,10 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import { Analytics } from '@vercel/analytics/next';
 import './globals.css';
 
-const productionUrl = process.env.NEXT_PUBLIC_SITE_URL
-  || (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : null)
-  || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : null)
-  || 'https://qrcodemaker.me';
+const productionUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://qrcodemaker.me';
 
 export const metadata: Metadata = {
   metadataBase: new URL(productionUrl),
