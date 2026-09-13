@@ -42,7 +42,12 @@ const quickLinks = [
 ];
 
 function normalizeUrl(value: string) {
-  const trimmed = value.trim();
+  let trimmed = value.trim();
+  if (!trimmed) return '';
+  // Safeguard: remove accidental example.com attached to user's real URL
+  if (trimmed !== 'https://example.com' && trimmed.includes('example.com')) {
+    trimmed = trimmed.replace(/https?:\/\/example\.com\/?/gi, '').trim();
+  }
   if (!trimmed) return '';
   const candidate = /^https?:\/\//i.test(trimmed) ? trimmed : `https://${trimmed}`;
   const parsed = new URL(candidate);
@@ -302,6 +307,10 @@ export default function Home({
 
       switch (qrType) {
         case 'url': {
+          if (!url.trim()) {
+            setActivePayload('');
+            return;
+          }
           const nextUrl = normalizeUrl(url);
           if (!nextUrl) {
             setError(lang === 'th' ? 'กรุณาใส่ URL เว็บไซต์' : 'Please enter a URL');
@@ -840,6 +849,9 @@ export default function Home({
   };
 
   const handleFieldClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (url === 'https://example.com' || url.trim() === 'https://example.com') {
+      setUrl('');
+    }
     const target = e.target as HTMLElement;
     if (target.tagName !== 'INPUT' && target.tagName !== 'TEXTAREA' && target.tagName !== 'BUTTON') {
       const input = e.currentTarget.querySelector('input, textarea') as HTMLInputElement | HTMLTextAreaElement | null;
@@ -1124,7 +1136,30 @@ export default function Home({
                       <input
                         id="url-input"
                         value={url}
-                        onChange={(event) => setUrl(event.target.value)}
+                        onFocus={() => {
+                          if (url === 'https://example.com' || url.trim() === 'https://example.com') {
+                            setUrl('');
+                          }
+                        }}
+                        onClick={() => {
+                          if (url === 'https://example.com' || url.trim() === 'https://example.com') {
+                            setUrl('');
+                          }
+                        }}
+                        onPaste={(event) => {
+                          const pasted = event.clipboardData.getData('text');
+                          if (url === 'https://example.com' || url.trim() === 'https://example.com' || url.includes('example.com')) {
+                            event.preventDefault();
+                            setUrl(pasted.trim());
+                          }
+                        }}
+                        onChange={(event) => {
+                          let val = event.target.value;
+                          if (val !== 'https://example.com' && val.includes('example.com')) {
+                            val = val.replace(/https?:\/\/example\.com\/?/gi, '').trim();
+                          }
+                          setUrl(val);
+                        }}
                         placeholder={t.urlPlaceholder}
                         inputMode="url"
                         spellCheck={false}
